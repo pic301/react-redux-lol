@@ -6,8 +6,22 @@ import Card from 'react-bootstrap/Card'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import CircleImage from './components/circleImage'
+import styled from 'styled-components'
+import fireWater from './images/fire-and-water-2354583_1920.jpg'
 
+const StyledContainer = styled(Container)`
+  margin-Bottom:500px; 
+  border:3px solid blue;
+  color:#ffffff;
+`;
 
+const Wrapper = styled.div`
+  display:flex;
+  background-color:#292929;
+`;
+const StyledImage = styled(Image)`
+  cursor: pointer;
+`;
 
 const baseURL = "http://ddragon.leagueoflegends.com/cdn/10.4.1"
 
@@ -19,6 +33,8 @@ const App = () => {
   .then(res => 
       setChampion(res.data.data)
     ).catch(err => console.log(err))
+    
+
  },[])
     console.log(champion)
 
@@ -27,13 +43,14 @@ const App = () => {
 
   const now = 100
 
-
   return (
-   <div >
-      <Container style={{ marginBottom: "500px" ,border:"3px solid green"}}>
+  <div style={{backgroundColor:"#333333"}}>
+    <StyledContainer >
+    <Image width="100%" height="500px" src={fireWater}></Image>
+     <Wrapper >
         <Row >
           {realChampion.map(cham => 
-             <Col xs={4} md={2} key={cham.key}>
+             <Col xs={6} sm={4} md={2} key={cham.key}>
                <OverlayTrigger  placement="bottom"  overlay={<Card style={{ width: '18rem' , padding:"1px"}}>
                 <Card.Img variant="top"  src={`http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${cham.id}_0.jpg`} />
                   <Card.Body>
@@ -48,15 +65,17 @@ const App = () => {
                   </Card.Text>
                 </Card.Body>
               </Card>}>
-              <Image roundedCircle  src={`${baseURL}/img/champion/${cham.image.full}`} alt=""/>
+              <StyledImage roundedCircle src={`${baseURL}/img/champion/${cham.image.full}`} alt="champion"/>
               </OverlayTrigger>
-               <p style={{textAlign:"center" ,paddingRight:"20px"}}>{cham.name}</p>
+               <p style={{textAlign:"center" ,paddingRight:"17px"}}>{cham.name}</p>
              </Col>
           )}
       </Row>
-    </Container>
-   </div>
+    <CircleImage/>
+   </Wrapper>
+    </StyledContainer>
  
+  </div>
 
    
   );
