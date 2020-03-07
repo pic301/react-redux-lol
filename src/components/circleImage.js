@@ -1,6 +1,10 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
-import circle from "../images/circle-37563_1280.png";
+import circle1 from "../images/Position_Gold-Top.png";
+import circle2 from "../images/Position_Gold-Jungle.png";
+import circle3 from "../images/Position_Gold-Mid.png";
+import circle4 from "../images/Position_Gold-Bot.png";
+import circle5 from "../images/Position_Gold-Support.png";
 import styled from 'styled-components'
 
 const StyledImage = styled.img`
@@ -12,7 +16,7 @@ const CircleImage = () => {
   return (
     <div
       style={{
-        margin: "10px",
+        margin: "50px",
         display: "inline-block",
         width: "40%",
         height: "40%"
@@ -20,27 +24,27 @@ const CircleImage = () => {
     >
       <Row>
         <Col>
-          <StyledImage width="150px" height="150px" src={circle} alt="circle" />
+          <StyledImage width="150px" height="150px" src={circle1} alt="circle" />
         </Col>
       </Row>
       <Row>
         <Col>
-          <StyledImage width="150px" height="150px" src={circle} alt="circle" />
+          <StyledImage width="150px" height="150px" src={circle2} alt="circle" />
         </Col>
       </Row>
       <Row>
         <Col>
-          <StyledImage width="150px" height="150px" src={circle} alt="circle" />
+          <StyledImage width="150px" height="150px" src={circle3} alt="circle" />
         </Col>
       </Row>
       <Row>
         <Col>
-          <StyledImage width="150px" height="150px" src={circle} alt="circle" />
+          <StyledImage width="150px" height="150px" src={circle4} alt="circle" />
         </Col>
       </Row>
       <Row>
         <Col>
-          <StyledImage width="150px" height="150px" src={circle} alt="circle" />
+          <StyledImage width="150px" height="150px" src={circle5} alt="circle" />
         </Col>
       </Row>
     </div>
