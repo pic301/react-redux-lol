@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 5000; //백엔드 서버
+
 const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser')
 
@@ -25,6 +25,9 @@ mongoose
   .then(() => console.log("몽고DB  연결됨"))
   .catch(err => console.log(err));
 
+
+  app.get('/hello',(req,res) => res.send('안녕하십니까!!!!!!!!!!!!!'))
+
   app.get("/api/users/auth", auth, (req, res) => {
     res.status(200).json({
         _id: req.user._id,
@@ -38,7 +41,7 @@ mongoose
     });
   });
 
-app.post("/register", (req, res) => {
+app.post("/api/users/register", (req, res) => {
   const user = new User(req.body);
   // 유저정보를 저장하기전엠 암호화
 
@@ -88,6 +91,6 @@ app.get('/api/users/logout',auth, (req, res) => {
   });
 });
 
-
+const port = 5000; //백엔드 서버
 app.listen(port, () => console.log(`${port}`));
 
