@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import LandingPage from "./components/Views/LandingPage/LandingPage";
 import ProductPage from "./components/Views/ProductPage/ProductPage";
 import LoginPage from "./components/Views/LoginPage/LoginPage";
+import RegisterPage from "./components/Views/RegisterPage/RegisterPage";
 
 // ==============================
 //           Bootstrap
@@ -44,6 +45,7 @@ const App = () => {
             <Route exact path="/" component={LandingPage} />
             <Route exact path="/login" component={LoginPage} />
             <Route exact path="/product" component={ProductPage} />
+            <Route exact path="/register" component={RegisterPage} />
           </Switch>
         </StyledContainer>
       </div>
