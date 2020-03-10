@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import FistImage from "./components/fistImage";
 import NavBar from "./components/NavBar";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -11,6 +10,7 @@ import LandingPage from "./components/Views/LandingPage/LandingPage";
 import ProductPage from "./components/Views/ProductPage/ProductPage";
 import LoginPage from "./components/Views/LoginPage/LoginPage";
 import RegisterPage from "./components/Views/RegisterPage/RegisterPage";
+import ChampionDetailPage from "./components/Views/ChampionDetailPage/ChampionDetailPage";
 
 // ==============================
 //           Bootstrap
@@ -26,7 +26,7 @@ const StyledContainer = styled(Container)`
 const App = () => {
   return (
     <Router>
-      <div style={{ backgroundColor: "#333333" }}>
+      <div >
         <StyledContainer>
           <Switch>
             <Route path="/login" render={() => null} />
@@ -35,7 +35,6 @@ const App = () => {
               render={() => (
                 <>
                   <NavBar />
-                  <FistImage />
                 </>
               )}
             />
@@ -46,6 +45,7 @@ const App = () => {
             <Route exact path="/login" component={LoginPage} />
             <Route exact path="/product" component={ProductPage} />
             <Route exact path="/register" component={RegisterPage} />
+            <Route exact path="/champion/:championId" component={ChampionDetailPage} />
           </Switch>
         </StyledContainer>
       </div>
