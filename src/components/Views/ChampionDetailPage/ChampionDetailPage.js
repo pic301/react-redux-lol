@@ -66,7 +66,7 @@ const ChampionDetailPage = ({ match }) => {
       </Carousel>
       <div >
         <Favorite
-          championId={detailChampion.id}
+          championId={championId}
           userFrom={localStorage.getItem("userId")}
         />
       </div>
