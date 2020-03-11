@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseURL, imgURL } from "../../config";
 import styled from "styled-components";
+import Favorite from "./Sections/Favorite";
 
 import Carousel from "react-bootstrap/Carousel";
 
@@ -27,7 +28,7 @@ const ChampionDetailPage = ({ match }) => {
   const [detailChampion, setDetailChampion] = useState("");
   const [spellName, setSpellName] = useState("");
   const [spellDescription, setSpellDescription] = useState("");
-  
+
   const { championId } = match.params;
 
   useEffect(() => {
@@ -39,63 +40,73 @@ const ChampionDetailPage = ({ match }) => {
 
   const { spells } = detailChampion;
 
-  const _onClick = (i) =>{
-  
-      setSpellName(spells[i].name)
-      setSpellDescription(spells[i].description)
-  }
-
+  const _onClick = i => {
+    setSpellName(spells[i].name);
+    setSpellDescription(spells[i].description);
+  };
   return (
     <>
-      <Carousel controls={true} indicators={false} interval={3000} fade={false}>
+      <Carousel
+        controls={true}
+        indicators={false}
+        interval={3000}
+        fade={false}
+        style={{ position: "relative" }}
+      >
         {detailChampionSkins &&
           Object.keys(detailChampionSkins).map((skin, i) => (
-            <Carousel.Item>
+            <Carousel.Item key={detailChampionSkins[i].id}>
               <StyledImage
                 src={`${imgURL}/champion/splash/${detailChampion.id}_${detailChampionSkins[i].num}.jpg`}
                 alt=""
               />
-              <p style={{ color: "red" }}>{detailChampionSkins[i].name}</p>
+              <div style={{ color: "red" }}>{detailChampionSkins[i].name}</div>
             </Carousel.Item>
           ))}
       </Carousel>
-        <SpellPassive>
-          {detailChampion.passive && (
-            <>
-              <img
-                src={`http://ddragon.leagueoflegends.com/cdn/10.5.1/img/passive/${detailChampion.passive.image.full}`}
-                alt=""
-              />
-              <p style={{ color: "black" }}>{detailChampion.passive.name}</p>
-              <p style={{ color: "black" }}>{detailChampion.passive.description}</p>
-            </>
-          )}
-        </SpellPassive>
+      <div >
+        <Favorite
+          championId={detailChampion.id}
+          userFrom={localStorage.getItem("userId")}
+        />
+      </div>
+      <SpellPassive>
+        {detailChampion && (
+          <>
+            <img
+              src={`http://ddragon.leagueoflegends.com/cdn/10.5.1/img/passive/${detailChampion.passive.image.full}`}
+              alt=""
+            />
+            <div style={{ color: "black" }}>{detailChampion.passive.name}</div>
+            <div style={{ color: "black" }}>
+              {detailChampion.passive.description}
+            </div>
+          </>
+        )}
+      </SpellPassive>
       <SpellContainer>
-
         {spells &&
           Object.keys(spells).map((spell, i) => (
-            <Spell>
+            <Spell key={spells[i].id}>
               <img
                 src={`http://ddragon.leagueoflegends.com/cdn/10.5.1/img/spell/${spells[i].image.full}`}
                 alt=""
                 onClick={() => _onClick(i)}
               />
-              <p style={{ color: "black" }}>{spells[i].name}</p>
+              <div style={{ color: "black" }}>{spells[i].name}</div>
             </Spell>
           ))}
-         {
-         }
-       <div style={{color:"red", width:"40%"}} >
+        {}
+        <div style={{ color: "red", width: "40%" }}>
           <div>{spellName}</div>
           <div>{spellDescription}</div>
-       </div>
+        </div>
       </SpellContainer>
       <h2 style={{ color: "black" }}>
         {detailChampion.name}
         <span>{detailChampion.tags}</span>
       </h2>
-      <p style={{ color: "black" }}>{detailChampion.lore}</p>
+      <div style={{ color: "black" }}>{detailChampion.lore}</div>
     </>
   );
 };

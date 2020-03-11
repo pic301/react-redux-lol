@@ -27,7 +27,7 @@ mongoose
   .catch(err => console.log(err));
 
 
-  app.get('/hello',(req,res) => res.send('안녕하십니까!!!!!!!!!!!!!'))
+
 
   app.get("/api/users/auth", auth, (req, res) => {
     res.status(200).json({
@@ -95,7 +95,7 @@ app.get('/api/users/logout',auth, (req, res) => {
 app.post('/api/favorite/favoriteNumber', (req, res) => {
 
   //mongoDB에서   favorite 숫자를 가져오기 
-  Favorite.find({ "movieId": req.body.movieId })
+  Favorite.find({ "championId": req.body.championId })
       .exec((err, info) => {
           if (err) return res.status(400).send(err)
           // 그다음에   프론트에  다시   숫자 정보를 보내주기  
@@ -108,19 +108,37 @@ app.post('/api/favorite/favoriteNumber', (req, res) => {
 app.post('/api/favorite/myFavorited', (req, res) => {
 
   //내가 좋아요 눌렀나 DB에서 가져오기
-  Favorite.find({ "movieId": req.body.movieId ,"userFrom": req.body.userFrom})
-      .exec((err, info) => {
-          if (err) return res.status(400).send(err)
-          
+  Favorite.find({ "championId": req.body.championId ,"userFrom": req.body.userFrom})
+  .exec((err, info) => {
+    if (err) return res.status(400).send(err)
+    // 그다음에   프론트에  다시   숫자 정보를 보내주기  
 
-          let result = false;
-          if(info.length !== 0 ){
-            result = true
-          }
-          res.status(200).json({ success: true, myFavorited: result })
-      })
+    let result = false;
+    if (info.length !== 0) {
+        result = true
+    }
+
+    res.status(200).json({ success: true, myFavorited: result })
+})
 
 })
+
+app.post('/api/favorite/addFavorite', (req, res) => {
+   const favorite = new Favorite(req.body)
+   favorite.save((err, doc) =>{
+    if (err) return res.status(400).send(err)
+    return res.status(200).json({ success: true });
+   })
+})
+
+app.post('/api/favorite/removeFavorite', (req, res) => {
+  Favorite.findOneAndDelete({ championId: req.body.championId , userFrom: req.body.userFrom })
+  .exec((err,doc) =>{
+     if(err) return res.status(400).send(err)
+     return res.status(200).json({ success:true, doc })
+  })
+})
+
 
 const port = 5000; //백엔드 서버
 app.listen(port, () => console.log(`${port}`));
