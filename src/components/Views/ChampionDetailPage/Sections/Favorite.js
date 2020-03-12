@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaHeart } from "react-icons/fa";
-import { FaRegHeart } from "react-icons/fa";
+import { useSelector,useDispatch } from 'react-redux'
+import { getFavorite } from '../../../../actions/user_actions'
+import { ADD_FAVORITE,REMOVE_FAVORITE } from '../../../../actions/types'
 
 const Favorite = ({ championId, userFrom }) => {
+  const dispatch = useDispatch();
+  const { myFavorited } = useSelector(state =>state.favorite)
   const [favoriteNumber, setFavoriteNumber] = useState(0);
-  const [myFavorited, setMyFavorited] = useState(false);
 
   let variables = {
     userFrom: userFrom,
@@ -18,9 +21,11 @@ const Favorite = ({ championId, userFrom }) => {
       .post("/api/favorite/favoriteNumber", variables)
       .then(res => setFavoriteNumber(res.data.favoriteNumber));
 
-    axios
-      .post("/api/favorite/myFavorited", variables)
-      .then(res => setMyFavorited(res.data.myFavorited));
+     
+      dispatch(getFavorite(variables))
+    // axios
+    //   .post("/api/favorite/myFavorited", variables)
+    //   .then(res => setMyFavorited(res.data.myFavorited));
   }, []);
   const onClickFavorite = () =>{
       if(myFavorited){
@@ -29,7 +34,11 @@ const Favorite = ({ championId, userFrom }) => {
       .then(res => {
         if(res.data.success){
           setFavoriteNumber(favoriteNumber-1)
-          setMyFavorited(!myFavorited)
+          dispatch({
+            type:REMOVE_FAVORITE,
+            myFavorited:myFavorited
+          })
+          
         }else{
           alert('좋아요 취소하는데 실패하셨습니다.')
         }
@@ -40,7 +49,10 @@ const Favorite = ({ championId, userFrom }) => {
       .then(res => {
         if(res.data.success){
           setFavoriteNumber(favoriteNumber+1)
-          setMyFavorited(!myFavorited)
+          dispatch({
+            type:ADD_FAVORITE,
+            myFavorited:myFavorited
+          })
         }else{
           alert('좋아요 취소하는데 실패하셨습니다.')
         }

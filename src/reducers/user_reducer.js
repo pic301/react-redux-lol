@@ -1,7 +1,11 @@
 import { LOGIN_USER } from "../actions/types";
 import { REGISTER_USER } from "../actions/types";
 
-export default function(state = {}, action) {
+const initialState = {
+
+}
+
+export default function(state = initialState, action) {
   switch (action.type) {
     case LOGIN_USER:
       return { ...state, loginSuccess: action.payload };
