@@ -3,6 +3,7 @@ import axios from "axios";
 import { baseURL, imgURL } from "../../config";
 import styled from "styled-components";
 import Favorite from "./Sections/Favorite";
+import Comment from "./Sections/Comment";
 
 import Carousel from "react-bootstrap/Carousel";
 
@@ -107,6 +108,7 @@ const ChampionDetailPage = ({ match }) => {
         <span>{detailChampion.tags}</span>
       </h2>
       <div style={{ color: "black" }}>{detailChampion.lore}</div>
+      <Comment championId={championId}/>
     </>
   );
 };
