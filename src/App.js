@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect, useState} from "react";
 import styled from "styled-components";
 import NavBar from "./components/NavBar";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -24,6 +24,7 @@ const StyledContainer = styled(Container)`
 `;
 
 const App = () => {
+
   return (
     <Router>
       <div >
