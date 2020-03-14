@@ -8,6 +8,7 @@ const config = require("./config/key");
 
 const { User } = require("./models/User");
 const { Favorite } = require("./models/Favorite");
+const { Comment } = require("./models/Comment");
 const { auth } = require('./middleware/auth')
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -84,12 +85,12 @@ app.post("/api/users/login", (req, res) => {
 //auth 콜백전에 인증처리 해줄 미들웨어추가
 
 app.get('/api/users/logout',auth, (req, res) => {
-  User.findOneAndUpdate({ _id: req.user._id }, { token: ""}, (err, doc) => {
-      if (err) return res.json({ success: false, err });
-      return res.status(200).send({
-          success: true
-      });
-  });
+  User.findOneAndUpdate({ _id: req.user._id }, { token: "", tokenExp: "" }, (err, doc) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).send({
+        success: true
+    });
+});
 });
 
 app.post('/api/favorite/favoriteNumber', (req, res) => {
@@ -137,6 +138,31 @@ app.post('/api/favorite/removeFavorite', (req, res) => {
      if(err) return res.status(400).send(err)
      return res.status(200).json({ success:true, doc })
   })
+})
+
+
+app.post('/api/comment/saveComment', (req, res) => {
+    const comment = new Comment(req.body)
+    comment.save((err, comment) =>{
+      if(err) return res.json({ success: false, err})
+  
+        Comment.find({"_id": comment._id})
+        .populate('writer')
+        .exec((err,result) =>{
+          if(err) return res.status(400).send(err)
+          return res.status(200).json({ success:true, result })
+        })
+    })
+}) 
+ 
+app.post('/api/comment/getComments', (req, res) => {
+
+    Comment.find({"championId": req.body.championId})
+      .populate('writer')
+      .exec((err,comments) =>{
+        if(err) return res.status(400).send(err)
+        return res.status(200).json({ success:true, comments })
+      })
 })
 
 

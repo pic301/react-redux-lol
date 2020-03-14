@@ -3,6 +3,7 @@ import axios from "axios";
 import { baseURL, imgURL } from "../../config";
 import styled from "styled-components";
 import Favorite from "./Sections/Favorite";
+import Comment from "./Sections/Comment";
 
 import Carousel from "react-bootstrap/Carousel";
 
@@ -28,15 +29,32 @@ const ChampionDetailPage = ({ match }) => {
   const [detailChampion, setDetailChampion] = useState("");
   const [spellName, setSpellName] = useState("");
   const [spellDescription, setSpellDescription] = useState("");
-
+  const [comments, setComments] = useState([]);
   const { championId } = match.params;
-
+  const variables = {championId:championId}
+  
   useEffect(() => {
     axios.get(`${baseURL}/data/ko_KR/champion/${championId}.json`).then(res => {
       setDetailChampion(res.data.data[championId]);
       setDetailChampionSkins(res.data.data[championId].skins);
     });
+    
+    
+    axios.post("/api/comment/getComments", variables).then(res =>{
+      if(res.data.success){
+        console.log(res)
+        setComments(res.data.comments)
+      }else{
+        alert("댓글 가져오는데 실패")
+      }
+      
+    });
   }, []);
+  
+  console.log(comments)
+  // const refresh = (newComment) =>{
+  //   setComments(comments.concat(newComment))
+  // }
 
   const { spells } = detailChampion;
 
@@ -107,6 +125,10 @@ const ChampionDetailPage = ({ match }) => {
         <span>{detailChampion.tags}</span>
       </h2>
       <div style={{ color: "black" }}>{detailChampion.lore}</div>
+
+      {/* 서버에서 온 댓글리스트들 배열을 props로 Comment 에 넘겨준다 */}
+      <Comment commentLists={comments} championId={championId}/>
+      {/* refresh={refresh}  */}
     </>
   );
 };
