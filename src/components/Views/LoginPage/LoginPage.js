@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { loginUser } from '../../../actions/user_actions'
 
-const LoginPage = () => {
+const LoginPage = ({history}) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,7 +25,12 @@ const LoginPage = () => {
     }
 
     dispatch(loginUser(dataToSubmit)).then(res =>{
-        console.log(res)})
+      if (res.payload.loginSuccess) {
+        window.localStorage.setItem('userId', res.payload.userId);
+       history.push("/");
+      } else {
+        
+      }})
   }; 
 
   return (

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { Link } from 'react-router-dom'
 import styled from "styled-components";
 import CircleImage from "../../circleImage";
 import {
@@ -7,7 +8,8 @@ import {
   Image,
   Card,
   ProgressBar,
-  OverlayTrigger
+  OverlayTrigger,
+  Button
 } from "react-bootstrap";
 import axios from "axios";
 import { baseURL } from "../../config";
@@ -49,9 +51,13 @@ const LandingPage = () => {
   if (clickedImage !== "" && SelecedChampions.length < 5) {
     SelecedChampions.push(clickedImage);
   }
-
+  const onLogOut = () =>{
+    localStorage.removeItem('userId')
+  }
   return (
-    <Wrapper>
+    <div>
+      <Button onClick={onLogOut}>로그아웃</Button>
+       <Wrapper>
       <div style={{ width: "350%", border: "1px solid green" }}>
         <CircleImage />
       </div>
@@ -108,12 +114,14 @@ const LandingPage = () => {
               />
             </OverlayTrigger>
             <p style={{ textAlign: "center", paddingRight: "17px" }}>
-              {cham.name}
+              <Link to={`/champion/${cham.id}`}>{cham.name}</Link>
             </p>
           </Col>
         ))}
       </Row>
     </Wrapper>
+    </div>   
+   
   );
 };
 
