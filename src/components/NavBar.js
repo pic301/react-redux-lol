@@ -11,6 +11,9 @@ const NavBar = () => {
         <Nav.Item>
           <Nav.Link href="/product" style={{fontSize:"1.5rem"}}><FiShoppingCart/></Nav.Link>
         </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="/favorite" style={{fontSize:"1.5rem"}}>MyFavorite</Nav.Link>
+        </Nav.Item>
       </Nav>
     );
 };

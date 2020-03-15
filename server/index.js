@@ -139,7 +139,16 @@ app.post('/api/favorite/removeFavorite', (req, res) => {
      return res.status(200).json({ success:true, doc })
   })
 })
+// 내가 좋아요를 누른 챔피언들의 리스트를 가죠온다
 
+
+app.post('/api/favorite/getFavoritedChampion', (req, res) => {
+  Favorite.find({ 'userFrom': req.body.userFrom })
+  .exec((err,favorites) =>{
+     if(err) return res.status(400).send(err)
+     return res.status(200).json({ success:true, favorites })
+  })
+})
 
 app.post('/api/comment/saveComment', (req, res) => {
     const comment = new Comment(req.body)
