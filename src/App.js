@@ -16,6 +16,7 @@ import ChampionDetailPage from "./components/Views/ChampionDetailPage/ChampionDe
 //           Bootstrap
 // ==============================
 import { Container } from "react-bootstrap";
+import FavoritePage from "./components/Views/FavoritePage/FavoritePage";
 
 const StyledContainer = styled(Container)`
   margin-bottom: 500px;
@@ -47,6 +48,7 @@ const App = () => {
             <Route exact path="/product" component={ProductPage} />
             <Route exact path="/register" component={RegisterPage} />
             <Route exact path="/champion/:championId" component={ChampionDetailPage} />
+            <Route exact path="/favorite" component={FavoritePage} />
           </Switch>
         </StyledContainer>
       </div>
