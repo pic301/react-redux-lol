@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { Row, Form, Button } from "react-bootstrap";
-import { useSelector } from 'react-redux'
 import Axios from 'axios'
 
-const SingleComment = ({championId,comment,refresh}) => {
+const SingleComment = ({loginUser,championId,comment,refresh}) => {
   const [openReply, setOpenReply] = useState(false);
-  const user = useSelector(state => state.user)
-  const [commentValue, setCommentValue] = useState();
+  const [commentValue, setCommentValue] = useState("");
 
   const handleChange = e => {
     setCommentValue(e.target.value);
@@ -14,25 +12,26 @@ const SingleComment = ({championId,comment,refresh}) => {
   const onSubmit = e => {
     e.preventDefault();
 
-  //   const variables ={
-  //     content:commentValue,
-  //     writer: user.userId,
-  //     championId:championId,
-  //     responseTo: comment._id
+    const variables ={
+      content:commentValue,
+      writer: loginUser,
+      championId:championId,
+      responseTo: comment._id
       
-  // }
+  }
 
-  //   Axios.post("api/comment/saveComment", variables).then(res =>{
-  //     if(res.data.success){
-  //       setCommentValue("")
-  //       refresh((res.data.result))
-  //     }else{
-  //       alert("코멘트 저장 실패")
-  //     }
-  //   });
+    Axios.post("/api/comment/saveComment", variables).then(res =>{
+      if(res.data.success){
+        setCommentValue("")
+        setOpenReply(!openReply)
+        refresh((res.data.result))
+      }else{
+        alert("코멘트 저장 실패")
+      }
+    });
 
   };
-  console.log("comment",comment)
+
   return (
     <div style={{ color: "black" }}>
 

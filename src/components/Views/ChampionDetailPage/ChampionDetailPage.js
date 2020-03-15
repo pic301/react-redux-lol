@@ -52,9 +52,9 @@ const ChampionDetailPage = ({ match }) => {
   }, []);
   
   console.log(comments)
-  // const refresh = (newComment) =>{
-  //   setComments(comments.concat(newComment))
-  // }
+  const refresh = (newComment) =>{
+    setComments(comments.concat(newComment))
+  }
 
   const { spells } = detailChampion;
 
@@ -127,8 +127,8 @@ const ChampionDetailPage = ({ match }) => {
       <div style={{ color: "black" }}>{detailChampion.lore}</div>
 
       {/* 서버에서 온 댓글리스트들 배열을 props로 Comment 에 넘겨준다 */}
-      <Comment commentLists={comments} championId={championId}/>
-      {/* refresh={refresh}  */}
+      <Comment refresh={refresh} commentLists={comments} championId={championId}/>
+    
     </>
   );
 };
