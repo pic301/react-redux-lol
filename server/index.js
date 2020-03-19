@@ -91,7 +91,7 @@ mongoose
   
   //auth 콜백전에 인증처리 해줄 미들웨어추가
   
-  app.get('/logout',auth, (req, res) => {
+  app.get('/api/users/logout',auth, (req, res) => {
     User.findOneAndUpdate({ _id: req.user._id }, { token: "", tokenExp: "" }, (err, doc) => {
       if (err) return res.json({ success: false, err });
       return res.status(200).send({
