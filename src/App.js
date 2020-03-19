@@ -2,7 +2,7 @@ import React,{useEffect, useState} from "react";
 import styled from "styled-components";
 import NavBar from "./components/NavBar";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
+import Auth from './hoc/auth'
 // ==============================
 //           Pages
 // ==============================
@@ -42,13 +42,13 @@ const App = () => {
             />
           </Switch>
 
-          <Switch>
-            <Route exact path="/" component={LandingPage} />
-            <Route exact path="/login" component={LoginPage} />
-            <Route exact path="/product" component={ProductPage} />
-            <Route exact path="/register" component={RegisterPage} />
-            <Route exact path="/champion/:championId" component={ChampionDetailPage} />
-            <Route exact path="/favorite" component={FavoritePage} />
+          <Switch>component={Auth(LoginPage, null)}
+            <Route exact path="/" component={Auth(LandingPage, null)} />
+            <Route exact path="/login" component={Auth(LoginPage, false)} />
+            <Route exact path="/product" component={Auth(ProductPage, true)} />
+            <Route exact path="/register" component={Auth(RegisterPage, false)} />
+            <Route exact path="/champion/:championId" component={Auth(ChampionDetailPage, true)} />
+            <Route exact path="/favorite" component={Auth(FavoritePage, true)} />
           </Switch>
         </StyledContainer>
       </div>

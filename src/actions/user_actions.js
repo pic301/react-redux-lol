@@ -5,11 +5,11 @@ import axios from 'axios';
 // =============================
 import  {LOGIN_USER} from './types'
 import  { REGISTER_USER } from './types'
+import  { AUTH_USER } from './types'
+import  { LOGOUT_USER } from './types'
 import  { GET_FAVORITE_REQUEST } from './types'
 import  { GET_FAVORITE_SUCCESS } from './types'
 import  { GET_FAVORITE_FAITURE } from './types'
-
-
 
 
 // =============================
@@ -36,6 +36,27 @@ export function registerUser(dataToSubmit){
     }
 
 } 
+
+export function auth(){
+    const request = axios.get('/api/users/auth')
+    .then(response => response.data);
+
+    return {
+        type: AUTH_USER,
+        payload: request
+    }
+}
+
+export function logoutUser(){
+    const request = axios.get('/api/users/logout')
+    .then(response => response.data);
+
+    return {
+        type: LOGOUT_USER,
+        payload: request
+    }
+}
+
 
 export const getFavorite = (variables) => async(dispatch) => {
     const response = await axios.post("/api/favorite/myFavorited", variables)
