@@ -13,6 +13,7 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 import { baseURL } from "../../config";
+import Main from './main/main'
 
 const Wrapper = styled.div`
   display: flex;
@@ -56,6 +57,7 @@ const LandingPage = () => {
   }
   return (
     <div>
+      <Main/>
       <Button onClick={onLogOut}>로그아웃</Button>
        <Wrapper>
       <div style={{ width: "350%", border: "1px solid green" }}>
