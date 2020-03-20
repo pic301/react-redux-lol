@@ -1,6 +1,7 @@
 import React from 'react';
 import { Nav} from "react-bootstrap";
 import { FiShoppingCart} from "react-icons/fi";
+import { GiRank3 } from "react-icons/gi";
 
 const NavBar = () => {
     return (
@@ -13,6 +14,9 @@ const NavBar = () => {
         </Nav.Item>
         <Nav.Item>
           <Nav.Link href="/favorite" style={{fontSize:"1.5rem"}}>MyFavorite</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="/rank" style={{fontSize:"1.5rem"}}>랭킹<GiRank3/></Nav.Link>
         </Nav.Item>
       </Nav>
     );
