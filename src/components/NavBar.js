@@ -22,7 +22,7 @@ const NavBar = () => {
       </Nav.Item>
       <Nav.Item>
         <Nav.Link href="/rank" style={{ fontSize: "1.5rem" }}>
-          Top랭킹
+          TOP랭킹
           <GiRank3 />
         </Nav.Link>
       </Nav.Item>

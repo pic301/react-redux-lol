@@ -13,7 +13,8 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 import { baseURL } from "../../config";
-import Main from './main/main'
+import Main from './main_video/main_video'
+import SearchSummoners from './SearchSummoners/SearchSummoners'
 import { logoutUser } from "../../../actions/user_actions";
 import { useDispatch} from 'react-redux'
 
@@ -60,6 +61,7 @@ const LandingPage = () => {
   }
   return (
     <div>
+      <SearchSummoners/>
       <Main/>
       <Button onClick={onLogOut}>로그아웃</Button>
        <Wrapper>
