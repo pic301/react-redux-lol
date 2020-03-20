@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
-
+import {API_KEY} from '../../config'
 
 const RankingPage = () => {
   const [challengerleagues, setChallengerleagues] = useState("");
   useEffect(() => {
     Axios.get(
-      "https://cors-anywhere.herokuapp.com/https://kr.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5?api_key=RGAPI-104e6891-a7ed-41a5-93ec-c25186755f22"
+      `https://cors-anywhere.herokuapp.com/https://kr.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5?api_key=${API_KEY}`
     ).then(res => setChallengerleagues(res.data));
   }, []);
 
