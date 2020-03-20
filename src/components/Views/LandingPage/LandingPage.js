@@ -14,6 +14,8 @@ import {
 import axios from "axios";
 import { baseURL } from "../../config";
 import Main from './main/main'
+import { logoutUser } from "../../../actions/user_actions";
+import { useDispatch} from 'react-redux'
 
 const Wrapper = styled.div`
   display: flex;
@@ -26,6 +28,7 @@ const StyledImage = styled(Image)`
 `;
 
 const LandingPage = () => {
+  const dispatch = useDispatch();
   const [champion, setChampion] = useState("");
   const [clickedImage, setClickedImage] = useState("");
   const [SelecedChampions, setSelecedChampions] = useState([]);
@@ -35,7 +38,6 @@ const LandingPage = () => {
       .get(`${baseURL}/data/ko_KR/champion.json`)
       .then(res => setChampion(res.data.data))
       .catch(err => console.log(err));
-    axios.get("/hello").then(res => console.log(res));
   }, []);
 
   const realChampion = Object.keys(champion).map(cham => champion[cham]);
@@ -53,6 +55,7 @@ const LandingPage = () => {
     SelecedChampions.push(clickedImage);
   }
   const onLogOut = () =>{
+    dispatch(logoutUser())
     localStorage.removeItem('userId')
   }
   return (

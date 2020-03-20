@@ -1,11 +1,13 @@
 import React from 'react';
 
+
 const ProductPage = () => {
-    return (
-        <div>
-            dfgdfg
-        </div>
-    );
+  
+  return (
+    <div>
+
+    </div>
+  );
 };
 
 export default ProductPage;
