@@ -1,16 +1,20 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { useDispatch, useSelector} from 'react-redux'
 import { FormControl,InputGroup,Button} from 'react-bootstrap'
 import { FaSearch } from "react-icons/fa";
 import { summonersName } from "../../../../actions/summoners_action";
+import { withRouter } from 'react-router-dom'
 
-const SearchSummoners = () => {
+const SearchSummoners = ({history}) => {
   const dispatch = useDispatch()
-  const summoner = useSelector(state => state.summoners.summoner)
+  const summonerName = useSelector(state => state.summoners.summonerName)
   const onChangeHandler = (e) =>{
     dispatch(summonersName(e.target.value))
   }
-  return (
+  const onClickSearch = () =>{
+    history.push(`/summoner/${summonerName}`)
+  }
+    return (
     <div>
       <InputGroup className="mb-3">
         <FormControl
@@ -18,11 +22,12 @@ const SearchSummoners = () => {
           aria-label="Recipient's username"
           aria-describedby="basic-addon2"
           onChange={onChangeHandler}
-          value={summoner}
+          value={summonerName}
         />
         <InputGroup.Append>
-          <Button variant="outline-secondary">
+          <Button variant="outline-secondary" onClick={onClickSearch}>
             <FaSearch />
+        
           </Button>
         </InputGroup.Append>
       </InputGroup>
@@ -30,4 +35,4 @@ const SearchSummoners = () => {
   );
 };
 
-export default SearchSummoners;
+export default withRouter(SearchSummoners);
