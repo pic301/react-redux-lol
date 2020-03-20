@@ -11,6 +11,7 @@ import ProductPage from "./components/Views/ProductPage/ProductPage";
 import LoginPage from "./components/Views/LoginPage/LoginPage";
 import RegisterPage from "./components/Views/RegisterPage/RegisterPage";
 import ChampionDetailPage from "./components/Views/ChampionDetailPage/ChampionDetailPage";
+import RankingPage from "./components/Views/RankingPage/RankingPage";
 
 // ==============================
 //           Bootstrap
@@ -49,6 +50,7 @@ const App = () => {
             <Route exact path="/register" component={Auth(RegisterPage, false)} />
             <Route exact path="/champion/:championId" component={Auth(ChampionDetailPage, true)} />
             <Route exact path="/favorite" component={Auth(FavoritePage, true)} />
+            <Route exact path="/rank" component={Auth(RankingPage, null)} />
           </Switch>
         </StyledContainer>
       </div>
