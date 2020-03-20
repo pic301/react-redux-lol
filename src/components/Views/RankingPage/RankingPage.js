@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
-import { Table } from "react-bootstrap";
+
 
 const RankingPage = () => {
   const [challengerleagues, setChallengerleagues] = useState("");
@@ -21,7 +21,7 @@ const RankingPage = () => {
       // a must be equal to b
       return 0;
     });
-
+    console.log(challengerleagues)
   return (
     <div>
    
@@ -30,6 +30,7 @@ const RankingPage = () => {
               <>
                   <div style={{ color: "red" }}> {`${index + 1}위`}</div>
                   <div style={{ color: "red" }} > {challenger.summonerName}</div>
+                  <div style={{ color: "red" }}> {challengerleagues.tier}</div>
                   <div style={{ color: "red" }}> {challenger.leaguePoints}</div>
               </>
             ))}
