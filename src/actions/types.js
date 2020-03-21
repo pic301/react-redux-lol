@@ -11,6 +11,7 @@ export const REMOVE_FAVORITE ='remove_favorite';
 
 
 export const SUMMONERS_NAME = 'summoners_name'
+export const SUMMONERS_ID  = 'summoners_id'
 
 
 

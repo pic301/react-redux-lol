@@ -1,7 +1,9 @@
 import { SUMMONERS_NAME } from "../actions/types";
+import { SUMMONERS_ID } from "../actions/types";
 
 const initialState = {
-  summonerName: ""
+  summonerName: "",
+  summonerId:""
 };
 export default function summonerReducer(state = initialState, action) {
   switch (action.type) {
@@ -10,6 +12,11 @@ export default function summonerReducer(state = initialState, action) {
         ...state,
         summonerName: action.payload
       };
+    case SUMMONERS_ID:
+        return {
+          ...state,
+          summonerId: action.payload
+        };
     default:
       return state
   }
