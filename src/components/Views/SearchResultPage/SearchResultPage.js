@@ -1,28 +1,70 @@
-import React, { useState,useEffect } from 'react';
-import {API_KEY}  from '../../config';
-import Axios from 'axios'
+import React, { useState, useEffect } from "react";
+import { API_KEY } from "../../config";
+import axios from "axios";
+import { Row, Col, Container, Card } from "react-bootstrap";
 
 
-const SearchResultPage = ({match}) => {
-    const summonName = match.params.summonerName
-    const [summonerId,setSummonerId] = useState('')
+
+const SearchResultPage = ({ match }) => {
+  const summonName = match.params.summonerName;
+  const [summonerData, setSummonerData] = useState("");
+  useEffect(() => {
+    const getSummonerData = async () => {
+      let summonerId = 0;
+      await axios
+        .get(
+          `https://cors-anywhere.herokuapp.com/https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonName}?api_key=${API_KEY}`
+        )
+        .then(res => {
+          summonerId = res.data.id
+          console.log('소환사',res.data)
+        })
+        axios.get(
+          `https://cors-anywhere.herokuapp.com/https://kr.api.riotgames.com/lol/league/v4/entries/by-summoner/${summonerId}?api_key=${API_KEY}`
+        ).then(res => setSummonerData(res.data));
+    };
+    getSummonerData();
+  }, [summonName]);
+
+ console.log('소환사정보',summonerData)
   
-    useEffect(() =>{
-          Axios.get(`https://cors-anywhere.herokuapp.com/https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonName}?api_key=${API_KEY}`)
-    .then(res =>
-        setSummonerId(res.data.id)
-      )
-     
-    },[])
-   
-    Axios.get(`https://cors-anywhere.herokuapp.com/https://kr.api.riotgames.com/lol/league/v4/entries/by-summoner/${summonerId}?api_key=RGAPI-57a5c276-def0-48e1-8460-d8367b8a9278`)
-    .then(res => console.log("dsfsdf",res))
-
-    return (
-      <div>
-        
-      </div>
-    );
+  return (
+    <div style={{ border: "3px solid green", color: "black" }}>
+      {summonerData && <Container style={{ border: "3px solid red" }}>
+        <Row>
+          <Col style={{ border: "3px solid pulple" }} sm={4}>
+            <Card>
+              <Card.Body>
+                <Card.Title>{summonName}</Card.Title>
+                <Card.Text>
+                  {`${summonerData[0].tier } ${summonerData[0].rank}`}
+                </Card.Text>
+                <Card.Text>{`${summonerData[0].leaguePoints}점`}</Card.Text>
+                <Card.Text>
+                  {`${summonerData[0].wins}승${summonerData[0].losses}패`}
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col style={{ border: "3px solid blue" }} sm={8}>
+            1 of 3
+          </Col>
+        </Row>
+        <Row>
+          <Col style={{ border: "3px solid pulple" }} sm={4}>
+            <Card>
+              <Card.Body>
+                <Card.Text></Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col style={{ border: "3px solid blue" }} sm={8}>
+            1 of 2
+          </Col>
+        </Row>
+      </Container>}
+    </div>
+  );
 };
 
 export default SearchResultPage;
