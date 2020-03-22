@@ -1,4 +1,4 @@
-const palette ={
+export const palette ={
     gray:[
 '#f8f9fa',
 
@@ -20,12 +20,4 @@ const palette ={
 
 '#212529',
 ]
-
-
-
-
-
-
-
-
 }
