@@ -3,9 +3,9 @@ import { Table } from "react-bootstrap";
 import Axios from "axios";
 import { API_KEY } from "../../config";
 import styled from "styled-components";
-
+import { palette } from "../../../lib/styles/palette";
 const StyledTd = styled.td`
-  color: "palette.gray[0]";
+  color: ${palette.gray[9]};
 `;
 
 

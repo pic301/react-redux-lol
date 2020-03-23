@@ -1,7 +1,8 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Front Spec
-React Redux Bootstrap 
+## Back-End Spec
+MongoDB
+## Front-End Spec
+React, Redux, Bootstrap, styled-component
 
 
 

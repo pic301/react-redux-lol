@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Link } from 'react-router-dom'
 import styled from "styled-components";
 import CircleImage from "../../circleImage";
+import { palette } from "../../../lib/styles/palette";
 import {
   Row,
   Col,
@@ -26,6 +27,17 @@ const Wrapper = styled.div`
 `;
 const StyledImage = styled(Image)`
   cursor: pointer;
+`;
+
+const SearchContainer = styled.div`
+  width:100%;
+  height:200px;
+  border:5px solid green;
+  color:${palette.gray[6]};
+  font-size:5rem;
+  text-align:center;
+  font-family: 'Gaegu', cursive;
+  
 `;
 
 const LandingPage = () => {
@@ -61,7 +73,10 @@ const LandingPage = () => {
   }
   return (
     <div>
+      <SearchContainer >
+      <div>전적검색</div>
       <SearchSummoners/>
+      </SearchContainer>
       <Main/>
       <Button onClick={onLogOut}>로그아웃</Button>
        <Wrapper>
