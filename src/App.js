@@ -13,6 +13,7 @@ import RegisterPage from "./components/Views/RegisterPage/RegisterPage";
 import ChampionDetailPage from "./components/Views/ChampionDetailPage/ChampionDetailPage";
 import RankingPage from "./components/Views/RankingPage/RankingPage";
 import SearchResultPage from "./components/Views/SearchResultPage/SearchResultPage";
+import CartPage from "./components/Views/CartPage/CartPage";
 
 // ==============================
 //           Bootstrap
@@ -53,6 +54,7 @@ const App = () => {
             <Route exact path="/favorite" component={Auth(FavoritePage, true)} />
             <Route exact path="/rank" component={Auth(RankingPage, null)} />
             <Route exact path="/summoner/:summonerName" component={SearchResultPage} />
+            <Route exact path="/cart" component={Auth(CartPage, true)} />
           </Switch>
         </StyledContainer>
       </div>

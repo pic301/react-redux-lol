@@ -28,7 +28,7 @@ const NavBar = () => {
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="#" style={{ fontSize: "1.5rem" }}>
+        <Nav.Link href="/cart" style={{ fontSize: "1.5rem" }}>
         <FiShoppingCart/>
         </Nav.Link>
       </Nav.Item>
