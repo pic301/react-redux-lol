@@ -11,12 +11,14 @@ const { Product } = require("./models/Product");
 const { User } = require("./models/User");
 const { auth } = require('./middleware/auth')
 
+const cors = require('cors')
 
-
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+app.options('*', cors())
 
 
 const mongoose = require("mongoose");
@@ -98,6 +100,19 @@ mongoose
           success: true
       });
   });
+  });
+
+  app.post('/api/users/addToCart',auth, (req, res) => {
+    User.findOneAndUpdate(
+      {_id: req.user._id},
+      { $push:{ cart:{id: req.query.productId,quantity:1,date: Date.now()}}},
+      { new: true },
+      (err,doc) =>{
+        if (err) return res.json({ success: false, err });
+        return res.status(200).json(doc.cart)
+      }
+    )
+
   });
 
 // ========================================
@@ -202,16 +217,7 @@ app.post('/api/comment/getComments', (req, res) => {
 })
 
 
-//상품 정보들을 업로드한다
-app.post('/api/product/uploadProduct', (req, res) => {
-
-  const product = new Product(req.body)
-  product.save((err, doc) =>{
-    if (err) return res.status(400).send(err)
-    return res.status(200).json({ success: true ,doc});
-   })
-})
-
+ 
 
 const port = 5000; //백엔드 서버
 app.listen(port, () => console.log(`${port}`));
