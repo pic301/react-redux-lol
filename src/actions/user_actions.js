@@ -10,6 +10,9 @@ import  { LOGOUT_USER } from './types'
 import  { GET_FAVORITE_REQUEST } from './types'
 import  { GET_FAVORITE_SUCCESS } from './types'
 import  { GET_FAVORITE_FAITURE } from './types'
+import  { ADD_TO_CART_USER } from './types'
+
+
 
 
 // =============================
@@ -66,5 +69,16 @@ export const getFavorite = (variables) => async(dispatch) => {
     }
     catch(e) {
         dispatch({type: GET_FAVORITE_FAITURE,payload:e,})
+    }
+}
+
+
+export const addToCart = (id) => {
+    console.log(id)
+    const request =  axios.post(`/api/users/addToCart?productId=${id}`).then(res => res.data)
+  
+    return {
+        type: ADD_TO_CART_USER,
+        payload: request
     }
 }

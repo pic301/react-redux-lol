@@ -1,10 +1,10 @@
-import { LOGIN_USER } from "../actions/types";
+import { LOGIN_USER, ADD_TO_CART_USER } from "../actions/types";
 import { REGISTER_USER } from "../actions/types";
 import { AUTH_USER } from "../actions/types";
 import { LOGOUT_USER } from "../actions/types";
 
 const initialState = {
-  user: null
+  
 };
 
 export default function(state = initialState, action) {
@@ -17,6 +17,10 @@ export default function(state = initialState, action) {
       return { ...state, userData: action.payload };
     case LOGOUT_USER:
       return { ...state };
+    case ADD_TO_CART_USER:
+      return{ ...state, userData:{
+        ...state.userData,cart:action.payload
+      }};
     default:
       return state;
   }
