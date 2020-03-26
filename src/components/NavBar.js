@@ -12,7 +12,7 @@ const NavBar = () => {
       </Nav.Item>
       <Nav.Item>
         <Nav.Link href="/product" style={{ fontSize: "1.5rem" }}>
-          <FaStoreAlt />
+          상점<FaStoreAlt />
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
