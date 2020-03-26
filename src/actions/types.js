@@ -12,7 +12,9 @@ export const REMOVE_FAVORITE ='remove_favorite';
 
 export const SUMMONERS_NAME = 'summoners_name'
 export const SUMMONERS_ID  = 'summoners_id'
+
 export const ADD_TO_CART_USER  = 'add_to_cart_user'
+export const GET_PRODUCTS  = 'get_products'
 
 
 
