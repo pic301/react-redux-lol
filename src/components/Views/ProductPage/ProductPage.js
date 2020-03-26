@@ -9,8 +9,10 @@ import { palette } from "../../../lib/styles/palette";
 //               Redux
 // ======================================
 
-import { addToCart } from "../../../actions/user_actions";
-import { useDispatch } from 'react-redux'
+import { addToCart, } from "../../../actions/user_actions";
+import { getProducts } from "../../../actions/products_actions";
+import { useDispatch,useSelector } from 'react-redux'
+import Button from "../../common/Button";
 
 const parser = require("fast-xml-parser");
 
@@ -24,17 +26,15 @@ const HeaderTitle = styled.div`
   font-weight: bold;
 `;
 
-const CartButton = styled.button`
-  background-color: ${palette.gray[0]};
-  color: ${palette.gray[9]};
-  padding: 10px;
+const CartButton = styled(Button)`
+  color: ${palette.gray[7]};
 `;
-const ImmediatelyPurchaseButton = styled.button`
-  margin-left: 10px;
-  background-color: ${palette.gray[0]};
-  color: #ffffff;
-  padding: 10px;
-  background-color: ${palette.red[8]};
+const ImmediatelyPurchaseButton = styled(Button)`
+
+  background-color: ${palette.red[7]};
+  &:hover{
+        background:${palette.red[9]};
+    }
 `;
 const StyleImage = styled.img`
   margin: 0 auto;
@@ -50,7 +50,7 @@ const PaginationContainer = styled(Pagination)`
 
 const ProductPage = () => {
   const dispatch = useDispatch();
-  const [products, setProducts] = useState("");
+  const products = useSelector(state => state.products.products)
   const [pageNum, setPageNum] = useState(1);
 
   useEffect(() => {
@@ -59,10 +59,11 @@ const ProductPage = () => {
     ).then(res => {
       const jsonObj = parser.parse(res.data);
       console.log(jsonObj);
-      setProducts(jsonObj.ProductSearchResponse.Products.Product);
-    });
+      const products = jsonObj.ProductSearchResponse.Products.Product;
+      dispatch(getProducts(products))
+    }); 
   }, [pageNum]);
-  console.log(products);
+
 
   const onClickPage = e => {
     setPageNum(e.target.text);
