@@ -73,10 +73,9 @@ export const getFavorite = (variables) => async(dispatch) => {
 }
 
 
-export const addToCart = (id) => {
-    console.log(id)
-    const request =  axios.post(`/api/users/addToCart?productId=${id}`).then(res => res.data)
-  
+export const addToCart = (product) => {
+    console.log(product)
+    const request =  axios.post("/api/users/addToCart",product).then(res => res.data)
     return {
         type: ADD_TO_CART_USER,
         payload: request

@@ -1,8 +1,6 @@
-
-export const GET_PRODUCTS  = 'get_products'
-
+import { GET_PRODUCTS } from "../actions/types";
 const initialState={
-  products:""
+  products:"",
 }
 
 export default function(state = initialState, action) {
@@ -13,4 +11,5 @@ export default function(state = initialState, action) {
         return state;
     }
   }
-  
+
+
