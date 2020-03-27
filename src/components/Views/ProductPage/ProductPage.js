@@ -77,7 +77,6 @@ const ProductPage = () => {
 
   const addToCartHandler = product => {
     dispatch(addToCart(product));
-    
   };
 
   let items = [];
