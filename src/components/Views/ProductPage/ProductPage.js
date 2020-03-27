@@ -9,7 +9,7 @@ import { palette } from "../../../lib/styles/palette";
 //               Redux
 // ======================================
 
-import { addToCart, } from "../../../actions/user_actions";
+import { addToCart } from "../../../actions/user_actions";
 import { getProducts } from "../../../actions/products_actions";
 import { useDispatch,useSelector } from 'react-redux'
 import Button from "../../common/Button";
@@ -75,8 +75,8 @@ const ProductPage = () => {
     setPageNum(pageNum + 1);
   };
 
-  const addToCartHandler = id => {
-    dispatch(addToCart(id));
+  const addToCartHandler = product => {
+    dispatch(addToCart(product));
   };
 
   let items = [];
@@ -109,7 +109,7 @@ const ProductPage = () => {
                   <ListGroupItem>배송:{product.Delivery}</ListGroupItem>
                 </ListGroup>
               </StyledCard>
-              <CartButton onClick={() => addToCartHandler(product.ProductCode)}>
+              <CartButton onClick={() => addToCartHandler(product)}>
                 장바구니담기
               </CartButton>
               <ImmediatelyPurchaseButton>
