@@ -45,7 +45,7 @@ const App = () => {
             />
           </Switch>
 
-          <Switch>component={Auth(LoginPage, null)}
+          <Switch> 
             <Route exact path="/" component={Auth(LandingPage, null)} />
             <Route exact path="/login" component={Auth(LoginPage, false)} />
             <Route exact path="/product" component={Auth(ProductPage, true)} />
