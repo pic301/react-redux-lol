@@ -25,6 +25,7 @@ const StyledContainer = styled(Container)`
   margin-bottom: 500px;
   border: 3px solid blue;
   color: #ffffff;
+  
 `;
 
 const App = () => {
@@ -44,7 +45,6 @@ const App = () => {
               )}
             />
           </Switch>
-
           <Switch> 
             <Route exact path="/" component={Auth(LandingPage, null)} />
             <Route exact path="/login" component={Auth(LoginPage, false)} />
