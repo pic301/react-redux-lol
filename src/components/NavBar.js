@@ -2,34 +2,37 @@ import React from "react";
 import { Nav, Badge } from "react-bootstrap";
 import { FaStoreAlt } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
+import { GoHome } from "react-icons/go";
+import { AiTwotoneHeart } from "react-icons/ai";
 import { useSelector } from "react-redux";
 
 const NavBar = () => {
   const myCarts = useSelector(state => state.user.userData);
 
   return (
-    <Nav activeKey="/home" onSelect style={{ backgroundColor: "#ffffff" }}>
-      <Nav.Item style={{ fontSize: "1.5rem" }}>
-        <Nav.Link href="/">홈</Nav.Link>
+    <Nav activeKey="/home" onSelect style={{padding:"20px"}}>
+      <Nav.Item style={{ fontSize: "2rem" }}>
+        <Nav.Link href="/">
+          <GoHome/>
+          </Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/product" style={{ fontSize: "1.5rem" }}>
-          상점
+        <Nav.Link href="/product" style={{ fontSize: "2rem" }}>
           <FaStoreAlt />
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/favorite" style={{ fontSize: "1.5rem" }}>
-          MyFavorite
+        <Nav.Link href="/favorite" style={{ fontSize: "2rem" }}>
+          <AiTwotoneHeart/>
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/rank" style={{ fontSize: "1.5rem" }}>
+        <Nav.Link href="/rank" style={{ fontSize: "2rem" }}>
           랭킹
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/cart" style={{ fontSize: "1.5rem" }}>
+        <Nav.Link href="/cart" style={{ fontSize: "2rem" }}>
          <div>
          <FiShoppingCart />
           {myCarts && myCarts !== "undefined" && myCarts !== null && Object.keys(myCarts.cart).length > 0 ? (
