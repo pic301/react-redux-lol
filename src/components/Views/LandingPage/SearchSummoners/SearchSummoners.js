@@ -10,7 +10,6 @@ import {API_KEY}  from '../../../config';
 const SearchSummoners = ({history}) => {
   const dispatch = useDispatch()
   const summonerName = useSelector(state => state.summoners.summonerName)
-  const summoner = useSelector(state => state.summoners.summonerId)
   
   const onChangeHandler = (e) =>{
     dispatch(summonersName(e.target.value))
@@ -24,8 +23,8 @@ const SearchSummoners = ({history}) => {
       history.push(`/summoner/${summonerName}`)
   }
     return (
-    <div>
-      <InputGroup className="mb-3">
+    <div style={{display:"flex", justifyContent:"center"}}>
+      <InputGroup className="mb-3" style={{width:"30%",marginTop:"60px"}}>
         <FormControl
           placeholder="소환사 명을 입력해주세요."
           aria-label="Recipient's username"
