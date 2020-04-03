@@ -4,6 +4,7 @@ import Axios from "axios";
 import { CORS_ANYWHERE, API_KEY_SHOP } from "../../config";
 import styled from "styled-components";
 import { palette } from "../../../lib/styles/palette";
+import Button from "../../common/Button";
   
 // ======================================
 //               Redux
@@ -12,7 +13,6 @@ import { palette } from "../../../lib/styles/palette";
 import { addToCart } from "../../../actions/user_actions";
 import { getProducts } from "../../../actions/products_actions";
 import { useDispatch,useSelector } from 'react-redux'
-import Button from "../../common/Button";
 
 const parser = require("fast-xml-parser");
 
