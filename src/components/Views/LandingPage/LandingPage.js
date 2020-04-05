@@ -1,34 +1,38 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import CircleImage from "../../circleImage";
 import { palette } from "../../../lib/styles/palette";
-import {Row,Col,Image,Card,ProgressBar,OverlayTrigger,Button} from "react-bootstrap";
-import axios from "axios";
+import {Row,Col,Image,Card,ProgressBar,OverlayTrigger} from "react-bootstrap";
 import { baseURL } from "../../config";
 import Main from "./main_video/main_video";
 import SearchSummoners from "./SearchSummoners/SearchSummoners";
-import { logoutUser } from "../../../actions/user_actions";
-import { useDispatch } from "react-redux";
 import "./LandingPage.css";
+import Button from '../../common/Button'
+
+// ======================================
+//                 Redux
+// ======================================
+import { logoutUser, } from "../../../actions/user_actions";
+import { getChampionData, } from "../../../actions/champion_actions";
+import { useDispatch, useSelector } from "react-redux";
+
 
 const Wrapper = styled.div`
   display: flex;
   border: 3px solid red;
   flex-direction: row;
   position: relative;
-  
 `;
 const StyledHeaderTitle = styled.div`
-    background: 50% 100% / 50% 50% no-repeat
+  background: 50% 100% / 50% 50% no-repeat
   radial-gradient(ellipse at bottom,#fcc2d7, transparent, transparent);
-  -webkit-background-clip: text;
   background-clip: text;
+  -webkit-background-clip: text;
   color: transparent;
   font-size: 3vw;
   font-weight:bold;
   animation: reveal 3000ms ease-in-out forwards 200ms,
-             glow 2500ms linear infinite 2000ms;
+  glow 2500ms linear infinite 2000ms;
 
   @keyframes reveal {
     80%{
@@ -43,16 +47,15 @@ const StyledHeaderTitle = styled.div`
       text-shadow: 0 0 8px #fff;
     }
   }
-  
 `;
 
 const ChampionJobBtn = styled.button`
- cursor:pointer;
+  cursor:pointer;
 	position:relative;
 	background:white;
 	border-top-right-radius:10px;
 	border-bottom-left-radius:10px;
-	transition:all 1s;
+  transition:all 1s;
 	&:after,&:before{
 		content:" ";
 		width:10px;
@@ -94,8 +97,8 @@ const StyledImage = styled(Image)`
 `;
 const ChampionJobImg = styled.img`
   border-radius:50%;
-  width:70px;
-  height:70px;
+  width:50px;
+  height:50px;
 `;
 const ChampionJobTitle = styled.div`
   text-align:center;
@@ -104,13 +107,15 @@ const ChampionJobTitle = styled.div`
 `;
 
 const SearchContainer = styled.div`
-  background: url('http://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/1625.png') 0 -60px;
-  width: 100%;
-  height: 200px;
+
+  background: url('http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Morgana_0.jpg')0 -90px no-repeat;
+  background-size:100% 500px;
   border: 5px solid green;
   color: ${palette.gray[6]};
   font-size: 5rem;
+  height: 200px;
   text-align: center;
+  width: 100%;
 `;
 
 const StyledLeftSideImage = styled.img`
@@ -133,33 +138,57 @@ const StyledRightSideImage = styled.img`
       display:none;
   }
 `;
+const StyledChampionName = styled.div`
+ margin-top:10px;
+ text-align: center;
+ padding-left:25px;
+`;
+
+const UserProfile = styled.div`
+    
+    display:flex;
+    justify-content:flex-end;
+`;
+const StyledCard = styled(Card)`
+  background:${palette.blue[3]};
+  width: 30%;
+  font-size:1.3rem;
+`;
+const ChampionNameButton = styled(Button)`
+
+`;
 
 const LandingPage = () => {
   const dispatch = useDispatch();
-  const [champion, setChampion] = useState("");
+  const userData = useSelector(state => state.user.userData)
+  const champion = useSelector(state => state.champion.championData)
+
+  // const [champion, setChampion] = useState("");
   const [clickedImage, setClickedImage] = useState("");
   const [SelecedChampions, setSelecedChampions] = useState([]);
   const [championJob, setChampionJob] = useState("Assassin");
   const [championJobClicked, setChampionJobClicked] = useState(false);
   
-  
-
   useEffect(() => {
-    axios
-      .get(`${baseURL}/data/ko_KR/champion.json`)
-      .then(res => setChampion(res.data.data))
-      .catch(err => console.log(err));
+    dispatch(getChampionData())
+    // axios
+    //   .get(`${baseURL}/data/ko_KR/champion.json`)
+    //   .then(res => setChampion(res.data.data))
+    //   .catch(err => console.log(err));
   }, []);
+  if(!champion){
+    return null
+  }
   
-  const realChampion = Object.keys(champion).map(cham => champion[cham]);
+  const championData = Object.keys(champion).map(cham => champion[cham]);
 
   const now = 100;
 
-  const handleSelectChampion = useCallback(
+  const handleSelectChampion = (
     i => {
-      setClickedImage(() => realChampion[i].image.full);
+      setClickedImage(() => championData[i].image.full);
     },
-    [realChampion]
+    []
   );
 
   if (clickedImage !== "" && SelecedChampions.length < 5) {
@@ -180,44 +209,114 @@ const LandingPage = () => {
   }
 
   return (
-    
     <div className="background">
-      <StyledLeftSideImage src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/MasterYi_10.jpg" alt=""/>
-      <StyledRightSideImage src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Fiora_4.jpg" alt=""/>
+      <StyledLeftSideImage
+        src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/MasterYi_10.jpg"
+        alt=""
+      />
+      <StyledRightSideImage
+        src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Fiora_4.jpg"
+        alt=""
+      />
       <SearchContainer>
         <StyledHeaderTitle>전적검색</StyledHeaderTitle>
         <SearchSummoners />
       </SearchContainer>
       <Main />
-      <Button onClick={onLogOut}>로그아웃</Button>
+      <UserProfile>
+        <StyledCard >
+          <div style={{display:"flex",}}>
+          <Card.Title style={{margin:"10px",fontSize:"1.5rem"}}>{`${userData && userData.name}님 반갑습니다`}</Card.Title>
+          </div>
+          <Card.Body>
+            <Button onClick={onLogOut}>로그아웃</Button>
+          </Card.Body>
+        </StyledCard>
+      </UserProfile>
+
       <Wrapper>
-       <div style={{display:"flex"}}>
+        <div style={{ display: "flex" }}>
           <div style={{ width: "350%", border: "1px solid green" }}>
-          <CircleImage />
+            <CircleImage />
+          </div>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <ChampionJobBtn
+              onClick={ChampionJobHandler}
+              id={championJob === "Assassin" ? "active" : ""}
+              value="Assassin"
+              color="#4b0d0b"
+            >
+              <ChampionJobImg
+                src="http://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/657.png"
+                alt=""
+              />
+            </ChampionJobBtn>
+            <ChampionJobTitle>암살자</ChampionJobTitle>
+            <ChampionJobBtn
+              onClick={ChampionJobHandler}
+              id={championJob === "Fighter" ? "active" : ""}
+              value="Fighter"
+              color="#663c0f"
+            >
+              <ChampionJobImg
+                src="http://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/658.png"
+                alt=""
+              />
+            </ChampionJobBtn>
+            <ChampionJobTitle>전사</ChampionJobTitle>
+            <ChampionJobBtn
+              onClick={ChampionJobHandler}
+              id={championJob === "Mage" ? "active" : ""}
+              value="Mage"
+              color="#5a82cc"
+            >
+              <ChampionJobImg
+                src="http://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/659.png"
+                alt=""
+              />
+            </ChampionJobBtn>
+            <ChampionJobTitle>마법사</ChampionJobTitle>
+            <ChampionJobBtn
+              onClick={ChampionJobHandler}
+              id={championJob === "Marksman" ? "active" : ""}
+              value="Marksman"
+              color="#2a3b26"
+            >
+              <ChampionJobImg
+                src="http://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/660.png"
+                alt=""
+              />
+            </ChampionJobBtn>
+            <ChampionJobTitle>원거리딜러</ChampionJobTitle>
+            <ChampionJobBtn
+              onClick={ChampionJobHandler}
+              id={championJob === "Support" ? "active" : ""}
+              value="Support"
+              color="#124039"
+            >
+              <ChampionJobImg
+                src="http://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/661.png"
+                alt=""
+              />
+            </ChampionJobBtn>
+            <ChampionJobTitle>서포터</ChampionJobTitle>
+            <ChampionJobBtn
+              onClick={ChampionJobHandler}
+              id={championJob === "Tank" ? "active" : ""}
+              value="Tank"
+              color="#2d3259"
+            >
+              <ChampionJobImg
+                src="http://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/662.png"
+                alt=""
+              />
+            </ChampionJobBtn>
+            <ChampionJobTitle>탱커</ChampionJobTitle>
+          </div>
         </div>
-         <div style={{display:"flex",flexDirection:"column" }}>
-        <ChampionJobBtn  onClick={ChampionJobHandler} id={championJob ==="Assassin"?'active':""} value="Assassin" color="#4b0d0b"><ChampionJobImg src="http://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/657.png" alt=""/>
-        </ChampionJobBtn><ChampionJobTitle>암살자</ChampionJobTitle>
-        <ChampionJobBtn  onClick={ChampionJobHandler} id={championJob ==="Fighter"?'active':""} value="Fighter" color="#663c0f"><ChampionJobImg src="http://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/658.png" alt=""/>
-        </ChampionJobBtn><ChampionJobTitle>전사</ChampionJobTitle>
-        <ChampionJobBtn  onClick={ChampionJobHandler} id={championJob ==="Mage"?'active':""} value="Mage" color="#5a82cc"><ChampionJobImg src="http://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/659.png" alt=""/>
-        </ChampionJobBtn><ChampionJobTitle>마법사</ChampionJobTitle>
-        <ChampionJobBtn  onClick={ChampionJobHandler} id={championJob ==="Marksman"?'active':""} value="Marksman" color="#2a3b26"><ChampionJobImg src="http://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/660.png" alt=""/>
-        </ChampionJobBtn><ChampionJobTitle>원거리딜러</ChampionJobTitle>
-        <ChampionJobBtn  onClick={ChampionJobHandler} id={championJob ==="Support"?'active':""}  value="Support" color="#124039"><ChampionJobImg src="http://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/661.png" alt=""/>
-        </ChampionJobBtn><ChampionJobTitle>서포터</ChampionJobTitle>
-        <ChampionJobBtn  onClick={ChampionJobHandler} id={championJob ==="Tank"?'active':""} value="Tank" color="#2d3259"><ChampionJobImg src="http://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/662.png" alt=""/>
-        </ChampionJobBtn><ChampionJobTitle>탱커</ChampionJobTitle>
-         </div>
-       </div>
         <Row>
           <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              position: "absolute",
-              top: 30,
-              left: 0
+            style={{display: "flex",flexDirection: "column",position: "absolute",top: 30,left: 0
             }}
           >
             {SelecedChampions &&
@@ -233,7 +332,7 @@ const LandingPage = () => {
                 />
               ))}
           </div>
-          {realChampion.map((cham, i) => (
+          {championData.map((cham, i) => (
             <>
               {cham.tags.find(element => element === `${championJob}`) ? (
                 <>
@@ -269,9 +368,11 @@ const LandingPage = () => {
                           onClick={() => handleSelectChampion(i)}
                         />
                       </OverlayTrigger>
-                      <p style={{ textAlign: "center" }}>
-                        <Link to={`/champion/${cham.id}`}>{cham.name}</Link>
-                      </p>
+                      <StyledChampionName>
+                        <ChampionNameButton to={`/champion/${cham.id}`}>
+                          {cham.name}
+                        </ChampionNameButton>
+                      </StyledChampionName>
                     </Col>
                   }
                 </>
