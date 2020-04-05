@@ -1,10 +1,10 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
-import circle1 from "../images/Position_Gold-Top.png";
-import circle2 from "../images/Position_Gold-Jungle.png";
-import circle3 from "../images/Position_Gold-Mid.png";
-import circle4 from "../images/Position_Gold-Bot.png";
-import circle5 from "../images/Position_Gold-Support.png";
+import circle1 from "../images/Position_Diamond-Top.png";
+import circle2 from "../images/Position_Diamond-Jungle.png";
+import circle3 from "../images/Position_Diamond-Mid.png";
+import circle4 from "../images/Position_Diamond-Bot.png";
+import circle5 from "../images/Position_Diamond-Support.png";
 import styled from 'styled-components'
 
 const StyledImage = styled.img`
