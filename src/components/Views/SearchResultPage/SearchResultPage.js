@@ -2,8 +2,15 @@ import React, { useState, useEffect } from "react";
 import { API_KEY } from "../../config";
 import axios from "axios";
 import styled from 'styled-components'
-import { Row, Col, Container, Card } from "react-bootstrap";
+import { Row, Col, Container, Card, Image } from "react-bootstrap";
 import {palette} from '../../../lib/styles/palette' 
+import {baseURL} from '../../../components/config'
+
+// =============================
+//           Redux
+// =============================
+import { useSelector } from 'react-redux'
+
 const StyledSummonerDataCard = styled(Card)`
   display:flex;
   flex-direction:row;
@@ -48,6 +55,8 @@ const dummy = {
 }
 
 const SearchResultPage = ({ match }) => {
+ const championData = useSelector(state => state.champion.championData)
+ 
   const summonName = match.params.summonerName;
   // const [summonerData, setSummonerData] = useState("");
   const [summonerDefaultData, setSummonerDefaultData] = useState("");
@@ -83,11 +92,22 @@ const SearchResultPage = ({ match }) => {
     };
     getSummonerData();
   }, [summonName]);
-
+if(!championData){
+  return null
+}
 //  console.log('소환사정보',summonerData)
 // style={{border:"4px solid orange"}}
+console.log('챔피온데이터', Object.entries(championData)[1][1])
 console.log('매치정보',(Object.keys(summonerMatchInfo).map(index => (summonerMatchInfo[index].champion))))
-const MatchInfoInChampion = Object.keys(summonerMatchInfo).map(index => <div>{summonerMatchInfo[index].champion}</div>)
+const ChampionKey = Object.keys(championData).map(index => Number(championData[index].key))
+const MatchInfoInChampionIndex= Object.keys(summonerMatchInfo).map((index,i) => ChampionKey.findIndex(el => el === summonerMatchInfo[index].champion))
+const MatchInfoDatas= Object.keys(summonerMatchInfo).map((index,i) => <div key={i}>
+<Image width="10%" height="10%" roundedCircle src={`${baseURL}/img/champion/${Object.entries(championData)[ChampionKey.findIndex(el => el === summonerMatchInfo[index].champion)][1].image.full}`} alt=""/>
+<Card.Text>{Object.entries(championData)[ChampionKey.findIndex(el => el === summonerMatchInfo[index].champion)][1].name}</Card.Text>
+</div>)
+
+console.log("인덱스를 찾아줘", Object.keys(summonerMatchInfo).map(index => ChampionKey.findIndex(el => el === summonerMatchInfo[index].champion)))
+console.log('챔피온키',ChampionKey)
   return (
   <>
     <div style={{ color: "black",border:"4px solid green" }}>
@@ -129,7 +149,10 @@ const MatchInfoInChampion = Object.keys(summonerMatchInfo).map(index => <div>{su
             </StyledSummonerDataCard>
           </Col>
           <Col style={{ border: "5px solid blue" }} sm={8}>
-          {MatchInfoInChampion}
+          <Card>
+          <div>최근 20 게임</div>
+          {MatchInfoDatas.slice(0,20)}
+          </Card>
           </Col>
         </Row>
       </Container>}
