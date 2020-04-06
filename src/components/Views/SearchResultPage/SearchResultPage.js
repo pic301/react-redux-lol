@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { Row, Col, Container, Card, Image } from "react-bootstrap";
 import {palette} from '../../../lib/styles/palette' 
 import {baseURL} from '../../../components/config'
+import Button from '../../common/Button'
 
 // =============================
 //           Redux
@@ -61,6 +62,7 @@ const SearchResultPage = ({ match }) => {
   // const [summonerData, setSummonerData] = useState("");
   const [summonerDefaultData, setSummonerDefaultData] = useState("");
   const [summonerMatchInfo, setSummonerMatchInfo] = useState("");
+  const [refreshMatchInfoDatas, setrefreshMatchInfoDatas] = useState("");
   const {profileIconId,summonerLevel} = summonerDefaultData
   console.log(profileIconId,summonerLevel)
   useEffect(() => {
@@ -83,31 +85,46 @@ const SearchResultPage = ({ match }) => {
         .get(
           `https://cors-anywhere.herokuapp.com/https://kr.api.riotgames.com/lol/match/v4/matchlists/by-account/${encryptedAccountId}?api_key=${API_KEY}`
         ).then(res => {
-         
           setSummonerMatchInfo((res.data.matches))
+          
         })
+        axios.get(`https://cors-anywhere.herokuapp.com/https://kr.api.riotgames.com/lol/match/v4/matchlists/by-account/${encryptedAccountId}?api_key=${API_KEY}`)
+        console.log('매치게임아이디',Object.keys(summonerMatchInfo).map(index => (summonerMatchInfo[index].gameId)))
         // axios.get(
         //   `https://cors-anywhere.herokuapp.com/https://kr.api.riotgames.com/lol/league/v4/entries/by-summoner/${summonerId}?api_key=${API_KEY}`
         // ).then(res => setSummonerData(res.data));
     };
     getSummonerData();
   }, [summonName]);
+
+
 if(!championData){
   return null
 }
 //  console.log('소환사정보',summonerData)
 // style={{border:"4px solid orange"}}
 console.log('챔피온데이터', Object.entries(championData)[1][1])
+
 console.log('매치정보',(Object.keys(summonerMatchInfo).map(index => (summonerMatchInfo[index].champion))))
+console.log('매치라인정보',Object.keys(summonerMatchInfo).map(index => (summonerMatchInfo[index].lane)))
+
+console.log('상위매치정보',summonerMatchInfo)
 const ChampionKey = Object.keys(championData).map(index => Number(championData[index].key))
-const MatchInfoInChampionIndex= Object.keys(summonerMatchInfo).map((index,i) => ChampionKey.findIndex(el => el === summonerMatchInfo[index].champion))
-const MatchInfoDatas= Object.keys(summonerMatchInfo).map((index,i) => <div key={i}>
-<Image width="10%" height="10%" roundedCircle src={`${baseURL}/img/champion/${Object.entries(championData)[ChampionKey.findIndex(el => el === summonerMatchInfo[index].champion)][1].image.full}`} alt=""/>
-<Card.Text>{Object.entries(championData)[ChampionKey.findIndex(el => el === summonerMatchInfo[index].champion)][1].name}</Card.Text>
-</div>)
+// const MatchInfoInChampionLine = Object.keys(summonerMatchInfo).map(index => (summonerMatchInfo[index].lane))
+// const MatchInfoInChampionIndex= Object.keys(summonerMatchInfo).map((index,i) => ChampionKey.findIndex(el => el === summonerMatchInfo[index].champion))
+const MatchInfoDatas= Object.keys(summonerMatchInfo).map((index,i) => 
+  <div key={i}>
+  <Image width="10%" height="10%" roundedCircle src={`${baseURL}/img/champion/${Object.entries(championData)[ChampionKey.findIndex(el => el === summonerMatchInfo[index].champion)][1].image.full}`} alt=""/>
+  <Card.Text>{Object.entries(championData)[ChampionKey.findIndex(el => el === summonerMatchInfo[index].champion)][1].name}</Card.Text>
+  <Card.Text>{summonerMatchInfo[index].lane}</Card.Text>
+  </div>)
 
 console.log("인덱스를 찾아줘", Object.keys(summonerMatchInfo).map(index => ChampionKey.findIndex(el => el === summonerMatchInfo[index].champion)))
 console.log('챔피온키',ChampionKey)
+
+const  MatchInfoDatasHandler = () => {
+  setrefreshMatchInfoDatas(MatchInfoDatas)
+}
   return (
   <>
     <div style={{ color: "black",border:"4px solid green" }}>
@@ -117,7 +134,9 @@ console.log('챔피온키',ChampionKey)
             <SummonerBorderImage><div>{summonerLevel}</div></SummonerBorderImage>
           </div>
           <img src="" alt=""/>
-          <div style={{width:"70%",height:"100%",border:"5px solid red"}}></div>
+          <div style={{width:"70%",height:"100%",border:"5px solid red"}}>
+            <Button>전적갱신</Button>
+          </div>
       </div>
       {/* {summonerData && <Container style={{ border: "3px solid red" }}> */}
       {<Container style={{ border: "8px solid red" }}>
@@ -151,8 +170,9 @@ console.log('챔피온키',ChampionKey)
           <Col style={{ border: "5px solid blue" }} sm={8}>
           <Card>
           <div>최근 20 게임</div>
-          {MatchInfoDatas.slice(0,20)}
+          {refreshMatchInfoDatas ? refreshMatchInfoDatas :MatchInfoDatas.slice(0,20)}
           </Card>
+          <Button fullWidth onClick={MatchInfoDatasHandler}>더보기</Button>
           </Col>
         </Row>
       </Container>}
@@ -160,5 +180,4 @@ console.log('챔피온키',ChampionKey)
   </>
   );
 };
-
 export default SearchResultPage;
