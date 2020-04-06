@@ -1,45 +1,58 @@
-import React from 'react';
-import styled from 'styled-components';
-import {palette} from '../../lib/styles/palette'
+import React from "react";
+import styled, { css } from "styled-components";
+import { palette } from "../../lib/styles/palette";
+import { Link } from "react-router-dom";
 
-const StyledButton = styled.button`
-    /* 공통 스타일 */
-    display: inline-flex;
-    outline: none;
-    border: none;
-    border-radius: 4px;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    padding-left: 1rem;
-    padding-right: 1rem;
+const buttonStyle = css`
+  /* 공통 스타일 */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #ffffff;
+  display: inline-flex;
+  font-weight: bold;
+  outline: none;
+  padding: 0 1rem;
+  
 
-    /* 크기 */
-    height: 2.25rem;
-    font-size:1rem;
+  /* 크기 */
+  font-size: 1rem;
+  height: 2.25rem;
 
-    /* 색상 */
-    background: ${palette.gray[3]};
-    &:hover{
-        background:${palette.gray[5]};
-    }
-    &:active{
-      
-    }
-    /* 기타 */
-    &+&{
-        margin-left:1rem
-    }
+  /* 색상 */
+  background: ${palette.grape[6]};
+  &:hover {
+    background: ${palette.grape[7]};
+  }
+  &:active {
+  }
+  /* 기타 */
+  & + & {
+    margin-left: 1rem;
+  }
 `;
 
+const StyledButton = styled.button`
+  ${buttonStyle}
+  ${props => props.fullWidth && css`
+    width:100%;
+    text-align:center;
+    display:block;
+    
+  `}
+`;
+const StyledLinkButton = styled(Link)`
+    &:hover {
+    text-decoration:none;
+  }
+`;
 
-
-
-const Button = ({children,...rest}) => {
-
-    return (
-        <StyledButton {...rest}>{children}</StyledButton>
-    );
+const Button = props => {
+  return props.to ? (
+    <StyledLinkButton {...props}>{props.children}</StyledLinkButton>
+  ) : (
+    <StyledButton {...props}>{props.children}</StyledButton>
+  );
 };
 
 export default Button;
