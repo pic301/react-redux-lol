@@ -1,9 +1,19 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 ## Back-End Spec
-MongoDB
+MongoDB, express
 ## Front-End Spec
 React, Redux, Bootstrap, styled-component
 
+## 스크린샷
+### 로그인페이지
+<img width="1259" alt="스크린샷 2020-04-07 오전 12 32 18" src="https://user-images.githubusercontent.com/55937548/78576158-41418900-7867-11ea-9c58-e648e6e76fde.png">
+
+### 회원가입 페이지
+<img width="1259" alt="스크린샷 2020-04-07 오전 1 42 38" src="https://user-images.githubusercontent.com/55937548/78583029-34299780-7871-11ea-8a9d-ab5f6bfa2e69.png">
+
+### Landing 페이지
+<img width="1774" alt="스크린샷 2020-04-07 오후 4 30 32" src="https://user-images.githubusercontent.com/55937548/78642096-21ed3f00-78ed-11ea-90aa-4db57c43b203.png">
+<img width="1774" alt="스크린샷 2020-04-07 오후 4 31 36" src="https://user-images.githubusercontent.com/55937548/78642184-447f5800-78ed-11ea-85b7-b31978afe6b5.png">
 
 
 ## 오류 및 해결

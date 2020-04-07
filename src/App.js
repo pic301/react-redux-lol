@@ -23,7 +23,6 @@ import FavoritePage from "./components/Views/FavoritePage/FavoritePage";
 
 const StyledContainer = styled(Container)`
   margin-bottom: 500px;
-  border: 3px solid blue;
   color: #ffffff;
   
 `;
