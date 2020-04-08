@@ -4,40 +4,45 @@ import { FaStoreAlt } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
 import { GoHome } from "react-icons/go";
 import { AiTwotoneHeart } from "react-icons/ai";
+import { FaTrophy } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import styled from "styled-components";
 
+const StyledNav = styled(Nav)`
+    font-size:1.9rem;
+    padding:20px;
+`;
 const NavBar = () => {
   const myCarts = useSelector(state => state.user.userData);
-
   return (
-    <Nav activeKey="/home" onSelect style={{padding:"20px"}}>
-      <Nav.Item style={{ fontSize: "2rem" }}>
+    <StyledNav  activeKey="/home">
+      <Nav.Item>
         <Nav.Link href="/">
           <GoHome/>
           </Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/product" style={{ fontSize: "2rem" }}>
+        <Nav.Link href="/product" >
           <FaStoreAlt />
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/favorite" style={{ fontSize: "2rem" }}>
+        <Nav.Link href="/favorite">
           <AiTwotoneHeart/>
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/rank" style={{ fontSize: "2rem" }}>
-          랭킹
+        <Nav.Link href="/rank" >
+          <FaTrophy/>
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/cart" style={{ fontSize: "2rem" }}>
+        <Nav.Link href="/cart" >
          <div>
          <FiShoppingCart />
           {myCarts && myCarts !== "undefined" && myCarts !== null && Object.keys(myCarts.cart).length > 0 ? (
             <div style={{position:"relative"}}>
-              <Badge pill={true} variant="danger" style={{position:"absolute",top:-39,left:18,padding:"4px 4px"}}>
+              <Badge pill={true} variant="danger" style={{position:"absolute",top:-42,left:18,padding:"2px 4px"}}>
                 {Object.keys(myCarts.cart).length}
               </Badge>{" "}
             </div>
@@ -47,7 +52,7 @@ const NavBar = () => {
          </div>
         </Nav.Link>
       </Nav.Item>
-    </Nav>
+    </StyledNav>
   );
 };
 

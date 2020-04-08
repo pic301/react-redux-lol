@@ -38,7 +38,9 @@ const StyledButton = styled.button`
     width:100%;
     text-align:center;
     display:block;
-    
+  `}
+  ${props => props.marginTop && css`
+    margin:10px 0;
   `}
 `;
 const StyledLinkButton = styled(Link)`

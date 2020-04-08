@@ -111,7 +111,7 @@ const LoginPage = ({history}) => {
     <StyledWrapper >
       <Container>
         <img style={{position:"absolute",width:"200px", top:"-170px",right:"30%"}} src={efdg} alt="champion"/>
-        <LoginTitle class="sign">LOGIN</LoginTitle>
+        <LoginTitle >LOGIN</LoginTitle>
         <form>
           <StyledInput
             type="email"
