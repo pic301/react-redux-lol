@@ -5,12 +5,26 @@ import { API_KEY } from "../../config";
 import styled,{css} from "styled-components";
 import { palette } from "../../../lib/styles/palette";
 import  Button  from "../../common/Button";
+import  {FaStar}  from "react-icons/fa";
+
 const StyledTd = styled.td`
-  color: ${palette.gray[9]};
-  ${props => props.color && css`
-    background-color:${palette.yellow[5]};
-    font-size:1.2rem;
-  `}
+  color:${props => props.nameColor && css`
+  ${palette.gray[7]}
+  ` ||  "#ffffff"};
+  font-size:1.6rem;
+`;
+const StyledTable = styled(Table)`
+    border:1px solid ${palette.gray[3]};
+`;
+const StyledStarIcon = styled(FaStar)`
+    color:${palette.yellow[6]};
+    margin: 0 5px;
+`;
+const HeaderTitle = styled.h1`
+  color: ${palette.gray[8]};
+  font-size: 4rem;
+  text-align: center;
+  font-weight: bold;
 `;
 
 const RankingPage = () => {
@@ -49,9 +63,10 @@ const RankingPage = () => {
     }
   return (
     <div >
-      <Button onClick={onPrevHandler}>이전</Button>
-      <Button onClick={onNextHandler}>다음</Button>
-      <Table>
+      <HeaderTitle>RANKING</HeaderTitle>
+      <Button marginTop onClick={onPrevHandler}>{"<"}</Button>
+      <Button marginTop onClick={onNextHandler}>{">"}</Button>
+      <StyledTable>
         <thead>
           <tr>
             <th>순위</th>
@@ -67,7 +82,7 @@ const RankingPage = () => {
                 {
                   <tr>
                     <StyledTd>{`${index+1+leaguesNumber}위`}</StyledTd>
-                    {index < 10 && leaguesNumber < 100?<StyledTd color >{challenger.summonerName}</StyledTd> :<StyledTd>{challenger.summonerName}</StyledTd>}
+                    {index < 10 && leaguesNumber < 100?<StyledTd nameColor><StyledStarIcon/>{challenger.summonerName}</StyledTd> :<StyledTd nameColor>{challenger.summonerName}</StyledTd>}
                     <StyledTd>{challengerleagues.tier}</StyledTd>
                     <StyledTd>{challenger.leaguePoints}</StyledTd>
                     <StyledTd>{`${challenger.wins}승 ${challenger.losses}패`}{ `${(challenger.wins/(challenger.wins+challenger.losses))*100}`.substring(0,5)}%</StyledTd>
@@ -75,7 +90,7 @@ const RankingPage = () => {
                 }
               </tbody>
             ))}
-      </Table>
+      </StyledTable>
       
     </div>
   );
