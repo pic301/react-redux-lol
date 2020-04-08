@@ -2,15 +2,21 @@ import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import Axios from "axios";
 import { API_KEY } from "../../config";
-import styled from "styled-components";
+import styled,{css} from "styled-components";
 import { palette } from "../../../lib/styles/palette";
+import  Button  from "../../common/Button";
 const StyledTd = styled.td`
   color: ${palette.gray[9]};
+  ${props => props.color && css`
+    background-color:${palette.yellow[5]};
+    font-size:1.2rem;
+  `}
 `;
-
 
 const RankingPage = () => {
   const [challengerleagues, setChallengerleagues] = useState("");
+  const [leaguesNumber,setLeguesNumber] = useState(0)
+  
   useEffect(() => {
     Axios.get(
       `https://cors-anywhere.herokuapp.com/https://kr.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5?api_key=${API_KEY}`
@@ -28,9 +34,23 @@ const RankingPage = () => {
       // a must be equal to b
       return 0;
     });
-  console.log(challengerleagues);
+    
+    const onNextHandler =()=>{
+      setLeguesNumber(leaguesNumber+100)
+      if(leaguesNumber === 200){
+        setLeguesNumber(0)
+      }
+    }
+    const onPrevHandler =()=>{
+      setLeguesNumber(leaguesNumber-100) 
+      if(leaguesNumber === 0){
+        setLeguesNumber(200)
+      }
+    }
   return (
-    <div>
+    <div >
+      <Button onClick={onPrevHandler}>이전</Button>
+      <Button onClick={onNextHandler}>다음</Button>
       <Table>
         <thead>
           <tr>
@@ -41,21 +61,22 @@ const RankingPage = () => {
             <th>승률</th>
           </tr>
         </thead>
-        <tbody>
           {challengerleagues &&
-            challengerleagues.entries.map((challenger, index) => (
-              <>
-                <tr>
-                  <StyledTd> {`${index + 1}위`}</StyledTd>
-                  <StyledTd> {challenger.summonerName}</StyledTd>
-                  <StyledTd> {challengerleagues.tier}</StyledTd>
-                  <StyledTd> {challenger.leaguePoints}</StyledTd>
-                  <StyledTd> {`${challenger.wins}승 ${challenger.losses}패`} { `${(challenger.wins/(challenger.wins+challenger.losses))*100}`.substring(0,5)}%</StyledTd>
-                </tr>
-              </>
+            Object.values(challengerleagues.entries).slice(leaguesNumber,leaguesNumber+100).map((challenger, index) => (
+              <tbody key={challenger.summonerName}>
+                {
+                  <tr>
+                    <StyledTd>{`${index+1+leaguesNumber}위`}</StyledTd>
+                    {index < 10 && leaguesNumber < 100?<StyledTd color >{challenger.summonerName}</StyledTd> :<StyledTd>{challenger.summonerName}</StyledTd>}
+                    <StyledTd>{challengerleagues.tier}</StyledTd>
+                    <StyledTd>{challenger.leaguePoints}</StyledTd>
+                    <StyledTd>{`${challenger.wins}승 ${challenger.losses}패`}{ `${(challenger.wins/(challenger.wins+challenger.losses))*100}`.substring(0,5)}%</StyledTd>
+                  </tr>
+                }
+              </tbody>
             ))}
-        </tbody>
       </Table>
+      
     </div>
   );
 };
