@@ -6,7 +6,31 @@ const CartPage = () => {
     const [cartProducts,setCartProducts] = useState('')
 
     useEffect(() =>{
-        axios
+      refresh()
+    },[])
+    
+   const prices = cartProducts && cartProducts.map((product,i) => cartProducts[i].product.ProductPrice)
+   const totalSum = prices && Array.from(prices).reduce((acc,cur) => acc+cur)
+  
+   console.log(cartProducts)
+
+   const onRemoveCartProduct =(product) =>{
+    const variables = {
+      product,
+    };
+    axios.post("/api/users/removeCart", variables).then(res =>  {
+      try {
+        setCartProducts([...res.data.result]);
+      } catch (error) {
+        console.log(error);
+      }
+      refresh()
+    })
+    refresh()
+   }
+
+  const refresh = () => {
+    axios
         .post("/api/users/cart", {
           userFrom: localStorage.getItem("userId")
         })
@@ -17,13 +41,11 @@ const CartPage = () => {
             console.log(error);
           }
         });
-    },[])
-   const prices = cartProducts && cartProducts.map((product,i) => cartProducts[i].product.ProductPrice)
-   const totalSum = prices && Array.from(prices).reduce((acc,cur) => acc+cur)
-  
-   console.log(cartProducts)
+  };
+
 
     return (
+    <>
         <Table striped bordered hover>
         <thead>
           <tr>
@@ -37,11 +59,12 @@ const CartPage = () => {
         <tbody>
           {cartProducts && cartProducts.map((product,i) =>
           <tr key={product.date}>
-            <td><img src={`${product.product.ProductImage100}`} alt=""/>{product.product.ProductName}</td>
+            <td><img src={`${product.product.ProductImage100}`} alt="ProductImage"/>{product.product.ProductName}</td>
             <td>{product.quantity}</td>
             <td>{product.product.ProductPrice}</td>
             <td>{product.product.Delivery}</td>
             <td>{product.product.Seller}</td>
+            <td><button onClick={() =>onRemoveCartProduct(product)}>삭제하기</button></td>
           </tr>
                    )}
         <tr>
@@ -49,6 +72,8 @@ const CartPage = () => {
         </tr>
         </tbody>
       </Table>
+      <button>결제하기</button>
+    </>
     );
 };
 
