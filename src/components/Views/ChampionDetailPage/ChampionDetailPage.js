@@ -173,7 +173,7 @@ const ChampionDetailPage = ({ match }) => {
             <div style={{ display: "flex",  justifyContent: "center" ,width:"25%" }}>
               <div style={{display:"flex",flexDirection:'column' ,alignItems:"center"}}>
               <img
-                src={`http://ddragon.leagueoflegends.com/cdn/10.5.1/img/passive/${detailChampion.passive.image.full}`}
+                src={`https://ddragon.leagueoflegends.com/cdn/10.7.1/img/passive/${detailChampion.passive.image.full}`}
                 alt=""
               />
               <PassiveName >{detailChampion.passive.name}</PassiveName>
@@ -197,7 +197,7 @@ const ChampionDetailPage = ({ match }) => {
             <div style={{display:"flex", alignItems:"center"}}>
                 <Spell key={spells[i].id} >
               <img
-                src={`http://ddragon.leagueoflegends.com/cdn/10.5.1/img/spell/${spells[i].image.full}`}
+                src={`https://ddragon.leagueoflegends.com/cdn/10.7.1/img/spell/${spells[i].image.full}`}
                 alt=""
                 onClick={() => _onClick(i)}
               />
@@ -212,7 +212,7 @@ const ChampionDetailPage = ({ match }) => {
         </div>
       </SpellContainer>
         <DetailChampionContainer>
-          <img src={`http://ddragon.leagueoflegends.com/cdn/10.6.1/img/champion/${championId}.png`} alt=""/>
+          <img src={`https://ddragon.leagueoflegends.com/cdn/10.7.1/img/champion/${championId}.png`} alt=""/>
           <DetailChampionName>챔피언:{detailChampion.name}</DetailChampionName>
           <span>역할군:{detailChampion.tags}</span>
         <DetailChampionDescripion>{detailChampion.lore}</DetailChampionDescripion>
