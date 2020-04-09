@@ -51,7 +51,7 @@ const ProductPage = () => {
 
   useEffect(() => {
     Axios(
-      `${CORS_ANYWHERE}http://openapi.11st.co.kr/openapi/OpenApiService.tmall?key=${API_KEY_SHOP}&apiCode=ProductSearch&keyword=리그오브레전드피규어&pageNum=${pageNum}&pageSize=20`
+      `${CORS_ANYWHERE}https://openapi.11st.co.kr/openapi/OpenApiService.tmall?key=${API_KEY_SHOP}&apiCode=ProductSearch&keyword=리그오브레전드피규어&pageNum=${pageNum}&pageSize=20`
     ).then(res => {
       const jsonObj = parser.parse(res.data);
       console.log(jsonObj);
