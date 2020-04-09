@@ -2,8 +2,8 @@
   "name": "react-redux-lol",
   "version": "0.1.0",
   "private": true,
-  "engine": {
-    "node": "v12.10.0",
+  "engines": {
+    "node": "12.10.0",
     "npm": "6.13.6"
   },
   "dependencies": {
