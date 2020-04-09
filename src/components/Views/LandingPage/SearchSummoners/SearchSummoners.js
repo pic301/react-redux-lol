@@ -33,7 +33,7 @@ const SearchSummoners = ({history}) => {
           value={summonerName}
         />
         <InputGroup.Append>
-          <Button variant="outline-secondary" onClick={onClickSearch}>
+          <Button onClick={onClickSearch}>
             <FaSearch />
           </Button>
         </InputGroup.Append>

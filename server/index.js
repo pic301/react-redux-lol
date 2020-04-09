@@ -7,7 +7,6 @@ const config = require("./config/key");
 
 const { Favorite } = require("./models/Favorite");
 const { Comment } = require("./models/Comment");
-const { Product } = require("./models/Product");
 const { User } = require("./models/User");
 const { auth } = require('./middleware/auth')
 
@@ -49,6 +48,7 @@ mongoose
           lastname: req.user.lastname,
           role: req.user.role,
           image: req.user.image,
+          cart: req.user.cart
       });
     });
   
@@ -105,7 +105,7 @@ mongoose
   app.post('/api/users/addToCart',auth, (req, res) => {
     User.findOneAndUpdate(
       {_id: req.user._id},
-      { $push:{ cart:{id: req.query.productId,quantity:1,date: Date.now()}}},
+      { $push:{ cart:{product: req.body,quantity:1,date: Date.now()}}},
       { new: true },
       (err,doc) =>{
         if (err) return res.json({ success: false, err });
@@ -114,6 +114,29 @@ mongoose
     )
 
   });
+  app.post('/api/users/removeCart',auth, (req, res) => {
+    User.findOneAndUpdate(
+      {_id: req.user._id},
+      { $pull:{ cart:req.body.product}},
+      {new:true},
+      (err,doc) =>{
+        if (err) return res.json({ success: false, err });
+        return res.status(200).json(doc.cart)
+      }
+    )
+    
+  });
+
+  app.post('/api/users/cart', (req, res) => {
+    User.find({"_id":req.body.userFrom })
+    .exec((err,doc) =>{
+       if(err) return res.status(400).send(err)
+       return res.status(200).json({ success:true, doc })
+    })
+  })
+
+
+
 
 // ========================================
 //                 favorite
@@ -153,7 +176,7 @@ app.post('/api/favorite/myFavorited', (req, res) => {
 
 app.post('/api/favorite/addFavorite', (req, res) => {
    const favorite = new Favorite(req.body)
-   favorite.save((err, doc) =>{
+   favorite.save((err, doc) =>{ 
     if (err) return res.status(400).send(err)
     return res.status(200).json({ success: true });
    })
@@ -219,6 +242,6 @@ app.post('/api/comment/getComments', (req, res) => {
 
  
 
-const port = 5000; //백엔드 서버
+const port = process.env.PORT || 5000; //백엔드 서버
 app.listen(port, () => console.log(`${port}`));
 

@@ -12,12 +12,24 @@ React, Redux, Bootstrap, styled-component
 <img width="1259" alt="스크린샷 2020-04-07 오전 1 42 38" src="https://user-images.githubusercontent.com/55937548/78583029-34299780-7871-11ea-8a9d-ab5f6bfa2e69.png">
 
 ### Landing 페이지
-
+<img width="990" alt="스크린샷 2020-04-08 오후 2 16 09" src="https://user-images.githubusercontent.com/55937548/78747084-88cd2f80-79a3-11ea-90bd-459398c90499.png">
 <img width="1773" alt="스크린샷 2020-04-08 오후 1 40 24" src="https://user-images.githubusercontent.com/55937548/78745246-861c0b80-799e-11ea-97d8-56e9de19d3d5.png">
 <img width="1774" alt="스크린샷 2020-04-07 오후 4 31 36" src="https://user-images.githubusercontent.com/55937548/78642184-447f5800-78ed-11ea-85b7-b31978afe6b5.png">
 
+### Favorite 페이지
+<img width="1531" alt="스크린샷 2020-04-09 오전 11 21 42" src="https://user-images.githubusercontent.com/55937548/78851262-57606c80-7a54-11ea-8106-97466485bbc3.png">
+
 ### Ranking 페이지
 <img width="1676" alt="스크린샷 2020-04-08 오전 11 15 48" src="https://user-images.githubusercontent.com/55937548/78737364-5236eb00-798a-11ea-9d00-0ba73b95c153.png">
+
+### Detail 페이지
+<img width="1531" alt="스크린샷 2020-04-08 오후 4 28 56" src="https://user-images.githubusercontent.com/55937548/78756656-1d408d80-79b6-11ea-8958-6261003b5751.png">
+
+### Product 페이지
+<img width="1531" alt="스크린샷 2020-04-09 오전 11 28 35" src="https://user-images.githubusercontent.com/55937548/78851646-48c68500-7a55-11ea-9972-50c19e96f2ac.png">
+
+### Cart 페이지
+<img width="1531" alt="스크린샷 2020-04-09 오전 11 13 09" src="https://user-images.githubusercontent.com/55937548/78850852-32b7c500-7a53-11ea-8cb3-5c431d3c06f8.png">
 
 ## 오류 및 해결
 

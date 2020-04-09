@@ -14,6 +14,9 @@ const StyledNav = styled(Nav)`
 `;
 const NavBar = () => {
   const myCarts = useSelector(state => state.user.userData);
+  if(!myCarts){
+    return null
+  }
   return (
     <StyledNav  activeKey="/home">
       <Nav.Item>
@@ -42,7 +45,7 @@ const NavBar = () => {
          <FiShoppingCart />
           {myCarts && myCarts !== "undefined" && myCarts !== null && Object.keys(myCarts.cart).length > 0 ? (
             <div style={{position:"relative"}}>
-              <Badge pill={true} variant="danger" style={{position:"absolute",top:-42,left:18,padding:"2px 4px"}}>
+              <Badge pill={true} variant="danger" style={{position:"absolute",top:-42,left:18 ,padding:"1px 5px 0 5px",borderRadius:"50%"}}>
                 {Object.keys(myCarts.cart).length}
               </Badge>{" "}
             </div>

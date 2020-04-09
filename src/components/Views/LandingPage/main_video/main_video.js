@@ -9,9 +9,10 @@ const Main = () => {
   return (
     <div
       className="youtube-container"
-      onMouseEnter={_onMouseEnter}
+      // onMouseEnter={_onMouseEnter}
     >
       <iframe
+        title="trailer"
         width="100%"
         height="500"
         src={`https://www.youtube.com/embed/aR-KAldshAE?autoplay=${hover}&mute=1`}
