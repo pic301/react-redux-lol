@@ -5,7 +5,7 @@ MongoDB, express
 React, Redux, Bootstrap, styled-component
 
 ## 배포 
-heroku
+heroku https://powerful-falls-31436.herokuapp.com/
 
 ## 스크린샷
 ### 로그인페이지
