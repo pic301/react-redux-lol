@@ -4,6 +4,19 @@ import { FaHeart } from "react-icons/fa";
 import { useSelector,useDispatch } from 'react-redux'
 import { getFavorite } from '../../../../actions/user_actions'
 import { ADD_FAVORITE,REMOVE_FAVORITE } from '../../../../actions/types'
+import styled from 'styled-components'
+import {palette} from '../../../../lib/styles/palette'
+
+const StyledHeartIcon = styled(FaHeart)`
+   color:${props => props.myFavorited || "black"};
+   font-size:1.5rem;
+   margin:10px;
+`;
+const MyFavoritedButtonContainer = styled.div`
+   & > button{
+     padding:10px;
+   }
+`;
 
 const Favorite = ({ championId, userFrom }) => {
   const dispatch = useDispatch();
@@ -20,8 +33,6 @@ const Favorite = ({ championId, userFrom }) => {
     axios
       .post("/api/favorite/favoriteNumber", variables)
       .then(res => setFavoriteNumber(res.data.favoriteNumber));
-
-     
       dispatch(getFavorite(variables))
     // axios
     //   .post("/api/favorite/myFavorited", variables)
@@ -64,16 +75,18 @@ const Favorite = ({ championId, userFrom }) => {
     <div>
       <div>
         {myFavorited ? (
-        
           <>
-            <FaHeart style={{color:"red"}}/>
-            <button onClick={onClickFavorite}>좋아요{favoriteNumber}</button>
+            <MyFavoritedButtonContainer>
+            <StyledHeartIcon myFavorited={`${palette.red[6]}`} />
+            <button  onClick={onClickFavorite}>좋아요{favoriteNumber}</button>
+            </MyFavoritedButtonContainer>
           </>
-      
         ) : (
           <>
-            <FaHeart style={{color:"black"}} />
+          <MyFavoritedButtonContainer>
+            <StyledHeartIcon />
             <button onClick={onClickFavorite}>좋아요{favoriteNumber}</button>
+         </MyFavoritedButtonContainer>
          </>
         )}
       </div>

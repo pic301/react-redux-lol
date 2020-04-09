@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Wrapper = styled.div`
   display: flex;
-  border: 3px solid red;
+  margin-top:10px;
   flex-direction: row;
   position: relative;
 `;
@@ -107,10 +107,8 @@ const ChampionJobTitle = styled.div`
 `;
 
 const SearchContainer = styled.div`
-
   background: url('http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Morgana_0.jpg')0 -90px no-repeat;
   background-size:100% 500px;
-  border: 5px solid green;
   color: ${palette.gray[6]};
   font-size: 5rem;
   height: 200px;
@@ -138,24 +136,25 @@ const StyledRightSideImage = styled.img`
       display:none;
   }
 `;
-const StyledChampionName = styled.div`
- margin-top:10px;
- text-align: center;
- padding-left:25px;
-`;
 
 const UserProfile = styled.div`
-    
     display:flex;
     justify-content:flex-end;
 `;
 const StyledCard = styled(Card)`
   background:${palette.blue[3]};
-  width: 30%;
+  width: 40%;
   font-size:1.3rem;
 `;
-const ChampionNameButton = styled(Button)`
+const StyledChampionName = styled.div`
+ display:flex;
+ flex-direction:column;
+ margin: 5px 0;
+ text-align:center;
+ width:120px;
 
+`;
+const ChampionNameButton = styled(Button)`
 `;
 
 const LandingPage = () => {
@@ -163,18 +162,12 @@ const LandingPage = () => {
   const userData = useSelector(state => state.user.userData)
   const champion = useSelector(state => state.champion.championData)
 
-  // const [champion, setChampion] = useState("");
-  const [clickedImage, setClickedImage] = useState("");
   const [SelecedChampions, setSelecedChampions] = useState([]);
   const [championJob, setChampionJob] = useState("Assassin");
   const [championJobClicked, setChampionJobClicked] = useState(false);
   
   useEffect(() => {
     dispatch(getChampionData())
-    // axios
-    //   .get(`${baseURL}/data/ko_KR/champion.json`)
-    //   .then(res => setChampion(res.data.data))
-    //   .catch(err => console.log(err));
   }, []);
   if(!champion){
     return null
@@ -184,16 +177,6 @@ const LandingPage = () => {
 
   const now = 100;
 
-  const handleSelectChampion = (
-    i => {
-      setClickedImage(() => championData[i].image.full);
-    },
-    []
-  );
-
-  if (clickedImage !== "" && SelecedChampions.length < 5) {
-    SelecedChampions.push(clickedImage);
-  }
   const onLogOut = () => {
     dispatch(logoutUser());
     localStorage.removeItem("userId");
@@ -207,7 +190,7 @@ const LandingPage = () => {
       setChampionJobClicked(!championJobClicked)
     }
   }
-
+console.log("챔피언데이터",championData)
   return (
     <div className="background">
       <StyledLeftSideImage
@@ -225,21 +208,20 @@ const LandingPage = () => {
       <Main />
       <UserProfile>
         <StyledCard >
-          <div style={{display:"flex",}}>
-          <Card.Title style={{margin:"10px",fontSize:"1.5rem"}}>{`${userData && userData.name}님 반갑습니다`}</Card.Title>
-          </div>
-          <Card.Body>
-            <Button onClick={onLogOut}>로그아웃</Button>
-          </Card.Body>
+           <div>
+           <Card.Title style={{margin:"10px",fontSize:"1.5rem"}}>{`${userData && userData.name}님 반갑습니다`}</Card.Title>
+            <Card.Body>
+              <Button onClick={onLogOut}>로그아웃</Button>
+            </Card.Body>
+           </div>
         </StyledCard>
       </UserProfile>
-
       <Wrapper>
         <div style={{ display: "flex" }}>
-          <div style={{ width: "350%", border: "1px solid green" }}>
+          <div >
             <CircleImage />
           </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div style={{ display: "flex", flexDirection: "column", margin:"10px" }}>
             <ChampionJobBtn
               onClick={ChampionJobHandler}
               id={championJob === "Assassin" ? "active" : ""}
@@ -333,7 +315,8 @@ const LandingPage = () => {
               ))}
           </div>
           {championData.map((cham, i) => (
-            <>
+          <div key={cham.key}>
+              <>
               {cham.tags.find(element => element === `${championJob}`) ? (
                 <>
                   {
@@ -365,10 +348,9 @@ const LandingPage = () => {
                         <StyledImage
                           src={`${baseURL}/img/champion/${cham.image.full}`}
                           alt="champion"
-                          onClick={() => handleSelectChampion(i)}
                         />
                       </OverlayTrigger>
-                      <StyledChampionName>
+                        <StyledChampionName  >
                         <ChampionNameButton to={`/champion/${cham.id}`}>
                           {cham.name}
                         </ChampionNameButton>
@@ -380,6 +362,7 @@ const LandingPage = () => {
                 ""
               )}
             </>
+          </div>
           ))}
         </Row>
       </Wrapper>

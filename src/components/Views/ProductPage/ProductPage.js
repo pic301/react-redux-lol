@@ -26,14 +26,10 @@ const HeaderTitle = styled.div`
   font-weight: bold;
 `;
 
-const CartButton = styled(Button)`
-  color: ${palette.gray[7]};
-`;
 const ImmediatelyPurchaseButton = styled(Button)`
-
   background-color: ${palette.red[7]};
   &:hover{
-        background:${palette.red[9]};
+        background:${palette.red[6]};
     }
 `;
 const StyleImage = styled.img`
@@ -92,6 +88,7 @@ const ProductPage = () => {
     );
   }
   console.log(items);
+  console.log("상품들",products);
   return (
     <ProductContainer>
       <HeaderTitle>STORE</HeaderTitle>
@@ -109,11 +106,11 @@ const ProductPage = () => {
                   <ListGroupItem>배송:{product.Delivery}</ListGroupItem>
                 </ListGroup>
               </StyledCard>
-              <CartButton onClick={() => addToCartHandler(product)}>
+              <Button marginTop onClick={() => addToCartHandler(product)}>
                 장바구니담기
-              </CartButton>
-              <ImmediatelyPurchaseButton>
-                바로구매하기
+              </Button>
+              <ImmediatelyPurchaseButton marginTop>
+                <a href={product.DetailPageUrl} target="_blank" rel="noopener noreferrer">바로구매하기</a>
               </ImmediatelyPurchaseButton>
             </Col>
           ))}
