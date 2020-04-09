@@ -38,6 +38,7 @@ heroku https://powerful-falls-31436.herokuapp.com/
 
  <img width="311" alt="스크린샷 2020-03-27 오전 5 18 53" src="https://user-images.githubusercontent.com/55937548/77692708-7558b680-6fea-11ea-9def-e2bb5d75bbb5.png">
 
+ ### CORS 이슈 문제
  ### 해결책
  Axios.get(`https://cors-anywhere.herokuapp.com/https://kr.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5?api_key=${API_KEY}`)
 
@@ -51,3 +52,11 @@ heroku https://powerful-falls-31436.herokuapp.com/
 ### 해결책
 ![스크린샷 2020-04-08 오후 1 30 58](https://user-images.githubusercontent.com/55937548/78744707-3557e300-799d-11ea-9ca7-121cc37deca2.png)
 정규표현식과 replace함수을 활용해서 해결
+
+### 페이지 이동시 첫화면이 스크롤이 그대로인 문제
+<img width="1059" alt="스크린샷 2020-04-09 오후 9 27 27" src="https://user-images.githubusercontent.com/55937548/78894965-0169e400-7aa9-11ea-8796-8b59c9ff4b55.png">
+ 
+ ### 해결책
+useEffect(() => {
+      window.scrollTo(0, 0)
+    });
