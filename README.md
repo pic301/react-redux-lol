@@ -13,6 +13,7 @@ heroku https://powerful-falls-31436.herokuapp.com/
 
 ### 회원가입 페이지
 <img width="1259" alt="스크린샷 2020-04-07 오전 1 42 38" src="https://user-images.githubusercontent.com/55937548/78583029-34299780-7871-11ea-8a9d-ab5f6bfa2e69.png">
+<img width="792" alt="스크린샷 2020-04-10 오전 1 46 22" src="https://user-images.githubusercontent.com/55937548/78919693-3daf3b80-7acd-11ea-8e2e-016a8e95e351.png">
 
 ### Landing 페이지
 <img width="990" alt="스크린샷 2020-04-08 오후 2 16 09" src="https://user-images.githubusercontent.com/55937548/78747084-88cd2f80-79a3-11ea-90bd-459398c90499.png">
