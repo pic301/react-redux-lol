@@ -182,7 +182,6 @@ const LandingPage = () => {
     localStorage.removeItem("userId");
   };
   const ChampionJobHandler = (e) =>{
-    console.log(e.target)
     if(e.target.value === undefined){
       return
     }else{
@@ -190,7 +189,6 @@ const LandingPage = () => {
       setChampionJobClicked(!championJobClicked)
     }
   }
-console.log("챔피언데이터",championData)
   return (
     <div className="background">
       <StyledLeftSideImage
@@ -206,16 +204,16 @@ console.log("챔피언데이터",championData)
         <SearchSummoners />
       </SearchContainer>
       <Main />
-      <UserProfile>
-        <StyledCard >
-           <div>
+     {userData && userData.name ? <UserProfile>
+        <StyledCard>
            <Card.Title style={{margin:"10px",fontSize:"1.5rem"}}>{`${userData && userData.name}님 반갑습니다`}</Card.Title>
             <Card.Body>
               <Button onClick={onLogOut}>로그아웃</Button>
             </Card.Body>
-           </div>
         </StyledCard>
       </UserProfile>
+    :""  
+    }
       <Wrapper>
         <div style={{ display: "flex" }}>
           <div >

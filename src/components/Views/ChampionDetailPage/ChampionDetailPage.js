@@ -111,6 +111,7 @@ const ChampionDetailPage = ({ match }) => {
       setSpellName(res.data.data[championId].spells[0].name)
       setDetailChampion(res.data.data[championId]);
       setDetailChampionSkins(res.data.data[championId].skins);
+      window.scrollTo(0, 0)
     });
 
     axios.post("/api/comment/getComments", variables).then(res => {

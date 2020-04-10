@@ -13,6 +13,7 @@ heroku https://powerful-falls-31436.herokuapp.com/
 
 ### 회원가입 페이지
 <img width="1259" alt="스크린샷 2020-04-07 오전 1 42 38" src="https://user-images.githubusercontent.com/55937548/78583029-34299780-7871-11ea-8a9d-ab5f6bfa2e69.png">
+<img width="792" alt="스크린샷 2020-04-10 오전 1 46 22" src="https://user-images.githubusercontent.com/55937548/78919693-3daf3b80-7acd-11ea-8e2e-016a8e95e351.png">
 
 ### Landing 페이지
 <img width="990" alt="스크린샷 2020-04-08 오후 2 16 09" src="https://user-images.githubusercontent.com/55937548/78747084-88cd2f80-79a3-11ea-90bd-459398c90499.png">
@@ -38,6 +39,7 @@ heroku https://powerful-falls-31436.herokuapp.com/
 
  <img width="311" alt="스크린샷 2020-03-27 오전 5 18 53" src="https://user-images.githubusercontent.com/55937548/77692708-7558b680-6fea-11ea-9def-e2bb5d75bbb5.png">
 
+ ### CORS 이슈 문제
  ### 해결책
  Axios.get(`https://cors-anywhere.herokuapp.com/https://kr.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5?api_key=${API_KEY}`)
 
@@ -51,3 +53,11 @@ heroku https://powerful-falls-31436.herokuapp.com/
 ### 해결책
 ![스크린샷 2020-04-08 오후 1 30 58](https://user-images.githubusercontent.com/55937548/78744707-3557e300-799d-11ea-9ca7-121cc37deca2.png)
 정규표현식과 replace함수을 활용해서 해결
+
+### 페이지 이동시 첫화면이 스크롤이 그대로인 문제
+<img width="1059" alt="스크린샷 2020-04-09 오후 9 27 27" src="https://user-images.githubusercontent.com/55937548/78894965-0169e400-7aa9-11ea-8796-8b59c9ff4b55.png">
+ 
+ ### 해결책
+useEffect(() => {
+      window.scrollTo(0, 0)
+    });

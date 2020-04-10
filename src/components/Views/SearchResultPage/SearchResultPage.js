@@ -11,7 +11,7 @@ import Button from '../../common/Button'
 //           Redux
 // =============================
 import { useSelector } from 'react-redux'
-
+let tierPositionValue 
 const StyledSummonerDataCard = styled(Card)`
   display:flex;
   flex-direction:row;
@@ -28,7 +28,7 @@ const StyledSummonerDataCard = styled(Card)`
 const StyledTierImage = styled.div`
   width:150px;
   height:160px;
-  background: url("https://static.developer.riotgames.com/img/docs/lol/emblems_and_positions.png") -717px 0 no-repeat;
+  background: url("https://static.developer.riotgames.com/img/docs/lol/emblems_and_positions.png") ${props => props.tierPositionValue} 0 no-repeat;
 `;
 const ProfileIconImage = styled.img`
     width:120px;
@@ -52,7 +52,7 @@ const SummonerBorderImage = styled.div`
 `;
 const dummy = {
   summonName:"crl",
-  summonerData:{tier:"DIAMOND",rank:"IV",leaguePoints:"100",wins:200,losses:300}
+  summonerData:{tier:"CHALLENGER",rank:"IV",leaguePoints:"100",wins:200,losses:300}
 }
 
 const SearchResultPage = ({ match }) => {
@@ -64,6 +64,7 @@ const SearchResultPage = ({ match }) => {
   const [summonerMatchInfo, setSummonerMatchInfo] = useState("");
   const [refreshMatchInfoDatas, setrefreshMatchInfoDatas] = useState("");
   const {profileIconId,summonerLevel} = summonerDefaultData
+
   console.log(profileIconId,summonerLevel)
   useEffect(() => {
     const getSummonerData = async () => {
@@ -125,6 +126,36 @@ console.log('챔피온키',ChampionKey)
 const  MatchInfoDatasHandler = () => {
   setrefreshMatchInfoDatas(MatchInfoDatas)
 }
+
+switch (dummy.summonerData.tier) {
+  case "IRON":
+    tierPositionValue = 0 +"px"
+    break;
+  case "BRONZE":
+    tierPositionValue = -145 +"px"
+    break;
+  case "SILVER":
+    tierPositionValue = -290 +"px"
+    break;
+  case "GOLD":
+    tierPositionValue = -435 +"px"
+    break;
+  case "PLATINUM":
+    tierPositionValue = -580 +"px"
+    break;
+  case "DIAMOND":
+    tierPositionValue = -725 +"px"
+    break;
+  case "MASTER":
+    tierPositionValue = -870 +"px"
+    break;
+  case "GRANDMASTER":
+    tierPositionValue = -1015 +"px"
+    break;
+  case "CHALLENGER":
+    tierPositionValue = -1160 +"px"
+    break;
+}
   return (
   <>
     <div style={{ color: "black",border:"4px solid green" }}>
@@ -143,7 +174,7 @@ const  MatchInfoDatasHandler = () => {
         <Row>
           <Col style={{ border: "7px solid green" }} sm={4}>
             <StyledSummonerDataCard>
-            <StyledTierImage></StyledTierImage>
+            <StyledTierImage tierPositionValue={tierPositionValue}></StyledTierImage>
               <Card.Body >
                 <div>솔로랭크</div>
                 <Card.Title>{dummy.summonName}</Card.Title>
