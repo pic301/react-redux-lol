@@ -1,7 +1,9 @@
-import React,{ useState } from "react";
+import React,{ useState, useCallback } from "react";
 import { useDispatch } from 'react-redux'
 import { registerUser } from '../../../actions/user_actions'
 import styled from 'styled-components'
+import { Alert} from 'react-bootstrap'
+import { palette } from '../../../lib/styles/palette'
 
 
 const StyledWrapper = styled.div`
@@ -69,6 +71,19 @@ const RegisterButton = styled.button`
     box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
     text-align:center;
 `;
+const StyledErrorMessage = styled.div`
+    color:${palette.red[7]};
+    text-align:center;
+    margin-top:20px;
+    font-size: 1rem;
+    font-weight: bold;
+`;
+const StyledAlert = styled(Alert)`
+  /* style={{textAlign:"center",width:"70%",margin:"0 auto"}} */
+  text-align:center;
+  width: 70%;
+  margin: 0 auto;
+`;
 
 
 const RegisterPage = () => { 
@@ -78,67 +93,116 @@ const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const onChangeEmail = (e) =>{
-    setEmail(e.target.value)
-  }
-  const onChangePassword = (e) =>{
-    setPassword(e.target.value)
-}
-const onChangePasswordCheck = (e) =>{
-    setPasswordCheck(e.target.value)
-}
-const onChangeName = (e) =>{
-    setName(e.target.value)
-}
-  const subminForm = (e) =>{
-    e.preventDefault()
+  const [isNameValid, setIsNameValid] = useState(true);
+  const [isEmailValid, setIsEmailValid] = useState(true);
+ 
+  const emailregexp= (
+    /^[\w-]+(\.[\w-]+)*@([a-z0-9-]+(\.[a-z0-9-]+)*?\.[a-z]{2,6}|(\d{1,3}\.){3}\d{1,3})(:\d{4})?$/
+  );
+
+  const onChangePassword = e => {
+    setPassword(e.target.value);
+  };
+  const onChangePasswordCheck = e => {
+    setPasswordCheck(e.target.value);
+  };
+
+  const onChangeName = useCallback(e => {
+    let name = e.target.value;
+    setName(e.target.value);
+    if (name && name.length > 2) {
+      setIsNameValid(true);
+    } else {
+      setIsNameValid(false);
+    }
+  }, []);
+
+  const onChangeEmail = useCallback(
+    e => {
+      let email = e.target.value;
+      if (email === "" || emailregexp.test(email)) {
+        setEmail(email);
+        setIsEmailValid(true);
+      } else {
+        setEmail(email);
+        setIsEmailValid(false);
+      }
+    },
+    [emailregexp]
+  );
+
+  const subminForm = e => {
+    e.preventDefault();
+    if(!name || !email || !password || !passwordCheck){
+      return
+    }
+
+    if (password !== passwordCheck) {
+      return setErrorMessage('비밀번호가 일치하지 않습니다');
+    }
 
     let dataToSubmit = {
-        name:name,
-        email:email,
-        password:password,
-        passwordCheck:passwordCheck,
+      name: name,
+      email: email,
+      password: password,
+      passwordCheck: passwordCheck
+    };
+    if(isNameValid && isEmailValid){
+      dispatch(registerUser(dataToSubmit)).then(res => {
+      if(res.payload.err ){ setErrorMessage('이미 사용중인 계정입니다')}
+    });
     }
-    console.log(dataToSubmit)
-    dispatch(registerUser(dataToSubmit)).then(res =>{
-        console.log(res)
-        }) 
-  } 
+  }; 
+
+  const example =(valid,text) =>{
+    return valid ? "" : <StyledAlert variant="warning">{text}</StyledAlert>;
+  }
   return( 
   <div>
     <StyledWrapper >
       <Container>
-        <RegisterTitle class="sign">회원가입</RegisterTitle>
+        <RegisterTitle className="sign">회원가입</RegisterTitle>
         <form>
-          <StyledInput
+            <StyledInput
             type="text"
             onChange={onChangeName}
             value={name}
             placeholder="Name"
-          />
+            required
+          />{
+              example(isNameValid,"이름은 2자 이상 이어야 합니다.")
+            }
             <StyledInput
               type="email"
               onChange={onChangeEmail}
               value={email}
               placeholder="UserEmail"
+              required
             />
+            {
+              example(isEmailValid,"올바른 이메일 형식이 아닙니다")
+            }
           <StyledInput
             type="password"
             onChange={onChangePassword}
             value={password}
             placeholder="Password"
+            required
           />
           <StyledInput
             type="password"
             onChange={onChangePasswordCheck}
             value={passwordCheck}
             placeholder="PasswordCheck"
+            required
           />
           <RegisterButton type="submit" name="action" onClick={subminForm}>
             등록
           </RegisterButton>
         </form>
+          <StyledErrorMessage>{errorMessage}</StyledErrorMessage>
       </Container>
     </StyledWrapper>
   </div>
