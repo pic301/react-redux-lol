@@ -14,7 +14,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-
 const mongoose = require("mongoose");
 mongoose
   .connect(config.mongoURI, {
@@ -237,4 +236,3 @@ app.post('/api/comment/getComments', (req, res) => {
 
 const port = process.env.PORT || 5000; //백엔드 서버
 app.listen(port, () => console.log(`${port}`));
-port.timeout= 24000
