@@ -11,7 +11,7 @@ const Main = () => {
       className="youtube-container"
       // onMouseEnter={_onMouseEnter}
     >
-      <iframe
+      {/* <iframe
         title="trailer"
         width="100%"
         height="500"
@@ -19,7 +19,7 @@ const Main = () => {
         frameBorder="0"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen={true}
-      ></iframe>
+      ></iframe> */}
     </div>
   );
 };

@@ -217,7 +217,7 @@ const LandingPage = () => {
       <Wrapper>
         <div style={{ display: "flex" }}>
           <div >
-            <CircleImage />
+            {/* <CircleImage /> */}
           </div>
           <div style={{ display: "flex", flexDirection: "column", margin:"10px" }}>
             <ChampionJobBtn
