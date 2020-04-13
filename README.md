@@ -4,8 +4,8 @@ MongoDB, express
 ## Front-End Spec
 React, Redux, Bootstrap, styled-component
 
-## 배포 
-heroku https://powerful-falls-31436.herokuapp.com/
+## 영상 
+[![Video Label]()](https://youtu.be/2gOOonce9kY)
 
 ## 스크린샷
 ### 로그인페이지
