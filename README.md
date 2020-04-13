@@ -4,8 +4,8 @@ MongoDB, express
 ## Front-End Spec
 React, Redux, Bootstrap, styled-component
 
-## 영상 
-[![비디오영상](https://youtu.be/2gOOonce9kY)
+## 비디오영상 보러가기 
+![비디오영상](https://youtu.be/PbkPDB6JqKY)
 
 ## 스크린샷
 ### 로그인페이지
