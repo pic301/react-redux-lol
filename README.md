@@ -5,7 +5,7 @@ MongoDB, express
 React, Redux, Bootstrap, styled-component
 
 ## 영상 
-[![Video Label]()](https://youtu.be/2gOOonce9kY)
+[![비디오영상](https://youtu.be/2gOOonce9kY)
 
 ## 스크린샷
 ### 로그인페이지
