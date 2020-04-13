@@ -5,8 +5,7 @@ MongoDB, express
 React, Redux, Bootstrap, styled-component
 
 ## 비디오영상 보러가기 
-![비디오영상](https://youtu.be/PbkPDB6JqKY)
-
+[![영상링크]](https://youtu.be/PbkPDB6JqKY))
 ## 스크린샷
 ### 로그인페이지
 <img width="1259" alt="스크린샷 2020-04-07 오전 12 32 18" src="https://user-images.githubusercontent.com/55937548/78576158-41418900-7867-11ea-9c58-e648e6e76fde.png">
