@@ -14,6 +14,7 @@ import ChampionDetailPage from "./components/Views/ChampionDetailPage/ChampionDe
 import RankingPage from "./components/Views/RankingPage/RankingPage";
 import SearchResultPage from "./components/Views/SearchResultPage/SearchResultPage";
 import CartPage from "./components/Views/CartPage/CartPage";
+import NotFoundPage from "./components/Views/NotFoundPage/NotFoundPage";
 
 // ==============================
 //           Bootstrap
@@ -54,6 +55,8 @@ const App = () => {
             <Route exact path="/rank" component={Auth(RankingPage, null)} />
             <Route exact path="/summoner/:summonerName" component={SearchResultPage} />
             <Route exact path="/cart" component={Auth(CartPage, true)} />
+            <Route exact path="/cart" component={Auth(CartPage, true)} />
+            <Route  component={NotFoundPage} />
           </Switch>
         </StyledContainer>
       </div>
