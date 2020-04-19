@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import styled from "styled-components";
 import CircleImage from "../../circleImage";
 import { palette } from "../../../lib/styles/palette";
@@ -16,6 +16,11 @@ import { logoutUser, } from "../../../actions/user_actions";
 import { getChampionData, } from "../../../actions/champion_actions";
 import { useDispatch, useSelector } from "react-redux";
 
+
+
+// ======================================
+//        StyledComponetns
+// ======================================
 
 const Wrapper = styled.div`
   display: flex;
@@ -114,6 +119,7 @@ const SearchContainer = styled.div`
   height: 200px;
   text-align: center;
   width: 100%;
+ 
 `;
 
 const StyledLeftSideImage = styled.img`
@@ -156,31 +162,52 @@ const StyledChampionName = styled.div`
 `;
 const ChampionNameButton = styled(Button)`
 `;
+const BackToTop = styled.button`
+    background-color:${palette.gray[3]}; 
+    border-radius:5px;
+    bottom:6rem;
+    cursor: pointer;
+    font-weight:700;
+    position:fixed;
+    padding: 10px;
+    right:6rem;
+    transition: all 0.3s ease-in-out;
+
+`;
 
 const LandingPage = () => {
   const dispatch = useDispatch();
   const userData = useSelector(state => state.user.userData)
   const champion = useSelector(state => state.champion.championData)
 
-  const [SelecedChampions, setSelecedChampions] = useState([]);
+
   const [championJob, setChampionJob] = useState("Assassin");
   const [championJobClicked, setChampionJobClicked] = useState(false);
-  
-  useEffect(() => {
-    dispatch(getChampionData())
-  }, []);
-  if(!champion){
-    return null
-  }
-  
-  const championData = Object.keys(champion).map(cham => champion[cham]);
+  const [pageYOffset, setPageYOffset] = useState(0);
 
-  const now = 100;
 
   const onLogOut = () => {
     dispatch(logoutUser());
     localStorage.removeItem("userId");
-  };
+    window.location.href = '/';
+  }
+
+  const onScroll =()=>{
+    setPageYOffset(window.pageYOffset)
+  }
+  useEffect(() => {
+    dispatch(getChampionData())
+    window.addEventListener('scroll', onScroll);
+    
+  }, []);
+
+  if(!champion){
+    return null
+  }
+  const championData = Object.keys(champion).map(cham => champion[cham]);
+
+  const now = 100;
+
   const ChampionJobHandler = (e) =>{
     if(e.target.value === undefined){
       return
@@ -189,8 +216,12 @@ const LandingPage = () => {
       setChampionJobClicked(!championJobClicked)
     }
   }
+  const scrollToTop = () =>{
+          window.scrollTo(0,0)
+    }
+  
   return (
-    <div className="background">
+    <div className="background"  >
       <StyledLeftSideImage
         src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/MasterYi_10.jpg"
         alt=""
@@ -295,23 +326,6 @@ const LandingPage = () => {
           </div>
         </div>
         <Row>
-          <div
-            style={{display: "flex",flexDirection: "column",position: "absolute",top: 30,left: 0
-            }}
-          >
-            {SelecedChampions &&
-              SelecedChampions.map(SelecedChampion => (
-                <Image
-                  style={{
-                    width: "60px",
-                    height: "60px",
-                    margin: "120px 0 0 0"
-                  }}
-                  src={`${baseURL}/img/champion/${SelecedChampion}`}
-                  alt="SelecedChampion"
-                />
-              ))}
-          </div>
           {championData.map((cham, i) => (
           <div key={cham.key}>
               <>
@@ -364,6 +378,7 @@ const LandingPage = () => {
           ))}
         </Row>
       </Wrapper>
+      {pageYOffset > 1200 ? <BackToTop onClick={scrollToTop}>TOP</BackToTop>:""}
     </div>
   );
 };
