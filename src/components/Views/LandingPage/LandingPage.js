@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import CircleImage from "../../circleImage";
-import {Row,Col,Image,Card,ProgressBar,OverlayTrigger} from "react-bootstrap";
+import {Row,Col,Card,ProgressBar,OverlayTrigger} from "react-bootstrap";
 import { baseURL } from "../../config";
+import { imgURL } from "../../config";
 import Main from "./main_video/main_video";
 import SearchSummoners from "./SearchSummoners/SearchSummoners";
 import Button from "../../common/Button";
@@ -14,6 +15,45 @@ import { logoutUser } from "../../../actions/user_actions";
 import { getChampionData } from "../../../actions/champion_actions";
 import { useDispatch, useSelector } from "react-redux";
 
+const CHAMPION_HP = 100;
+
+const CHAMPION_JOB_OBJS =[{
+  job:"Assassin",
+  otherJobName:"암살자",
+  color:"#4b0d0b",
+  url:`${baseURL}/img/profileicon/657.png`,
+},
+{
+  job:"Fighter",
+  otherJobName:"전사",
+  color:"#663c0f",
+  url:`${baseURL}/img/profileicon/658.png`,
+},
+{
+  job:"Mage",
+  otherJobName:"마법사",
+  color:"#5a82cc",
+  url:`${baseURL}/img/profileicon/659.png`,
+},
+{
+  job:"Marksman",
+  otherJobName:"원거리딜러",
+  color:"#2a3b26",
+  url:`${baseURL}/img/profileicon/660.png`,
+},
+{
+  job:"Support",
+  otherJobName:"서포터",
+  color:"#124039",
+  url:`${baseURL}/img/profileicon/661.png`,
+},
+{
+  job:"Tank",
+  otherJobName:"탱커",
+  color:"#2d3259",
+  url:`${baseURL}/img/profileicon/662.png`,
+},
+]
 
 const LandingPage = () => {
   const dispatch = useDispatch();
@@ -30,9 +70,10 @@ const LandingPage = () => {
     window.location.href = "/";
   },[dispatch])
 
-  const onScroll = () => {
+  const onScroll = useCallback(() => {
     setPageYOffset(window.pageYOffset);
-  };
+  },[])
+
   useEffect(() => {
     dispatch(getChampionData());
     window.addEventListener("scroll", onScroll);
@@ -43,10 +84,9 @@ const LandingPage = () => {
   }
   const championData = Object.keys(champion).map(cham => champion[cham]);
 
-  const now = 100;
 
   const ChampionJobHandler = e => {
-    if (e.target.value === undefined) {
+    if (e.target.value === undefined ) {
       return;
     } else {
       setChampionJob(e.target.value);
@@ -56,15 +96,30 @@ const LandingPage = () => {
   const scrollToTop = () => {
     window.scrollTo(0, 0);
   };
+  const JobButtons = CHAMPION_JOB_OBJS.map(championJobObj => {
+    return  <>
+    <ChampionJobBtn
+    onClick={ChampionJobHandler}
+    value={championJobObj.job}
+    color={championJobObj.color}
+    url={championJobObj.url}
+    >
+    
+    </ChampionJobBtn>
+     <ChampionJobTitle>{championJobObj.otherJobName}</ChampionJobTitle>
+    </>
+    }
+    )
+ 
 
   return (
     <div className="background">
       <StyledLeftSideImage
-        src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/MasterYi_10.jpg"
+        src={`${imgURL}/champion/splash/MasterYi_10.jpg`}
         alt=""
       />
       <StyledRightSideImage
-        src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Fiora_4.jpg"
+        src={`${imgURL}/champion/splash/Fiora_4.jpg`}
         alt=""
       />
       <SearchContainer>
@@ -94,60 +149,11 @@ const LandingPage = () => {
           <div
             style={{ display: "flex", flexDirection: "column", margin: "10px" }}
           >
-            <ChampionJobBtn
-              onClick={ChampionJobHandler}
-              value="Assassin"
-              color="#4b0d0b"
-              url="https://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/657.png"
-            >
-            </ChampionJobBtn>
-            <ChampionJobTitle>암살자</ChampionJobTitle>
-            <ChampionJobBtn
-              onClick={ChampionJobHandler}
-              value="Fighter"
-              color="#663c0f"
-              url="https://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/658.png"
-            >
-            </ChampionJobBtn>
-            <ChampionJobTitle>전사</ChampionJobTitle>
-            <ChampionJobBtn
-              onClick={ChampionJobHandler}
-              value="Mage"
-              color="#5a82cc"
-              url="https://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/659.png"
-            >
-            </ChampionJobBtn>
-            <ChampionJobTitle>마법사</ChampionJobTitle>
-            <ChampionJobBtn
-              onClick={ChampionJobHandler}
-              value="Marksman"
-              color="#2a3b26"
-              url="https://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/660.png"
-            >
-            </ChampionJobBtn>
-            <ChampionJobTitle>원거리딜러</ChampionJobTitle>
-            <ChampionJobBtn
-              onClick={ChampionJobHandler}
-              id={championJob === "Support" ? "active" : ""}
-              value="Support"
-              color="#124039"
-              url="https://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/661.png"
-            >
-            </ChampionJobBtn>
-            <ChampionJobTitle>서포터</ChampionJobTitle>
-            <ChampionJobBtn
-              onClick={ChampionJobHandler}
-              id={championJob === "Tank" ? "active" : ""}
-              value="Tank"
-              color="#2d3259"
-              url="https://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/662.png"
-            >
-            </ChampionJobBtn>
-            <ChampionJobTitle>탱커</ChampionJobTitle>
+            {JobButtons}
           </div>
         </div>
         <Row>
-          {championData.map((cham, i) => (
+          {championData.map((cham) => (
             <div key={cham.key}>
               <>
                 {cham.tags.find(element => element === `${championJob}`) ? (
@@ -160,7 +166,7 @@ const LandingPage = () => {
                             <StyledChampionCard >
                               <Card.Img
                                 variant="top"
-                                src={`https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${cham.id}_0.jpg`}
+                                src={`${imgURL}/champion/splash/${cham.id}_0.jpg`}
                               />
                               <Card.Body>
                                 <Card.Title>{cham.name}</Card.Title>
@@ -168,8 +174,8 @@ const LandingPage = () => {
                                 <Card.Text>
                                   <ProgressBar
                                     variant="success"
-                                    now={now}
-                                    label={`${now}%`}
+                                    now={CHAMPION_HP}
+                                    label={`${CHAMPION_HP}%`}
                                   />
                                 </Card.Text>
                                 {`HP:${cham.stats.hp}`}
