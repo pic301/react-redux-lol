@@ -79,14 +79,13 @@ const StyledErrorMessage = styled.div`
     font-weight: bold;
 `;
 const StyledAlert = styled(Alert)`
-  /* style={{textAlign:"center",width:"70%",margin:"0 auto"}} */
   text-align:center;
   width: 70%;
   margin: 0 auto;
 `;
 
 
-const RegisterPage = () => { 
+const RegisterPage = ({history}) => { 
 
   const dispatch = useDispatch();
   const [name, setName] = useState("");
@@ -97,70 +96,76 @@ const RegisterPage = () => {
 
   const [isNameValid, setIsNameValid] = useState(true);
   const [isEmailValid, setIsEmailValid] = useState(true);
- 
+
   const emailregexp= (
     /^[\w-]+(\.[\w-]+)*@([a-z0-9-]+(\.[a-z0-9-]+)*?\.[a-z]{2,6}|(\d{1,3}\.){3}\d{1,3})(:\d{4})?$/
-  );
-
-  const onChangePassword = e => {
-    setPassword(e.target.value);
-  };
-  const onChangePasswordCheck = e => {
-    setPasswordCheck(e.target.value);
-  };
-
-  const onChangeName = useCallback(e => {
-    let name = e.target.value;
-    setName(e.target.value);
-    if (name && name.length > 2) {
-      setIsNameValid(true);
-    } else {
-      setIsNameValid(false);
-    }
-  }, []);
-
-  const onChangeEmail = useCallback(
-    e => {
-      let email = e.target.value;
-      if (email === "" || emailregexp.test(email)) {
-        setEmail(email);
-        setIsEmailValid(true);
-      } else {
-        setEmail(email);
-        setIsEmailValid(false);
-      }
-    },
-    [emailregexp]
-  );
-
-  const subminForm = e => {
-    e.preventDefault();
-    if(!name || !email || !password || !passwordCheck){
-      return
-    }
-
-    if (password !== passwordCheck) {
-      return setErrorMessage('비밀번호가 일치하지 않습니다');
-    }
-
-    let dataToSubmit = {
-      name: name,
-      email: email,
-      password: password,
-      passwordCheck: passwordCheck
+    );
+    
+    const onChangePassword = e => {
+      setPassword(e.target.value);
     };
-    if(isNameValid && isEmailValid){
-      dispatch(registerUser(dataToSubmit)).then(res => {
-      if(res.payload.err ){ setErrorMessage('이미 사용중인 계정입니다')}
-    });
-    }
-  }; 
-
-  const example =(valid,text) =>{
-    return valid ? "" : <StyledAlert variant="warning">{text}</StyledAlert>;
-  }
-  return( 
-  <div>
+    
+    const onChangePasswordCheck = e => {
+      setPasswordCheck(e.target.value);
+    };
+    
+    const onChangeName = useCallback(e => {
+      let name = e.target.value;
+      setName(e.target.value);
+      if (name && name.length > 2) {
+        setIsNameValid(true);
+      } else {
+        setIsNameValid(false);
+      }
+    }, []);
+    
+    const onChangeEmail = useCallback(
+      e => {
+        let email = e.target.value;
+        if (email === "" || emailregexp.test(email)) {
+          setEmail(email);
+          setIsEmailValid(true);
+        } else {
+          setEmail(email);
+          setIsEmailValid(false);
+        }
+      },
+      [emailregexp]
+      );
+      
+      const subminForm = (e) => {
+        e.preventDefault();
+        if(!name || !email || !password || !passwordCheck){
+          return
+        }
+        
+        if (password !== passwordCheck) {
+          return setErrorMessage('비밀번호가 일치하지 않습니다');
+        }
+        
+        let dataToSubmit = {
+          name: name,
+          email: email,
+          password: password,
+          passwordCheck: passwordCheck
+        };
+        if(isNameValid && isEmailValid){
+          dispatch(registerUser(dataToSubmit)).then(res => {
+            if(res.payload.err ){ setErrorMessage('이미 사용중인 계정입니다')}
+          });
+        }
+        if(history){
+          history.push("/login");
+        }
+        
+      }; 
+   
+      
+      const example =(valid,text) =>{
+        return valid ? "" : <StyledAlert variant="warning">{text}</StyledAlert>;
+      }
+      return( 
+        <div>
     <StyledWrapper >
       <Container>
         <RegisterTitle className="sign">회원가입</RegisterTitle>

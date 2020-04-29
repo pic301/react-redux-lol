@@ -4,7 +4,7 @@ import { FaStoreAlt } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
 import { GoHome } from "react-icons/go";
 import { AiTwotoneHeart } from "react-icons/ai";
-import { FaTrophy } from "react-icons/fa";
+import { FaTrophy,FaTwitterSquare,FaFacebookSquare,FaInstagram } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
@@ -12,10 +12,21 @@ const StyledNav = styled(Nav)`
     font-size:1.9rem;
     padding:20px;
 `;
+const NavContainer = styled.header`
+   display:flex;
+   justify-content:space-between;
+   align-items:baseline;
+`;
+const HeaderRightIcons = styled.div`
+   font-size:1.6rem;
+   & > {
+    color:${props => props.color}
+   }
+`;
 const NavBar = () => {
   const myCarts = useSelector(state => state.user.userData);
- 
   return (
+    <NavContainer >
     <StyledNav  activeKey="/home">
       <Nav.Item>
         <Nav.Link href="/">
@@ -54,6 +65,18 @@ const NavBar = () => {
         </Nav.Link>
       </Nav.Item>
     </StyledNav>
+      <HeaderRightIcons>
+        <a href="https://twitter.com/">
+          <FaTwitterSquare />        
+        </a>
+        <a href="https://www.instagram.com/">
+          <FaInstagram />        
+        </a>
+        <a href="https://ko-kr.facebook.com/">
+          <FaFacebookSquare />       
+        </a>
+      </HeaderRightIcons>
+  </NavContainer>
   );
 };
 
