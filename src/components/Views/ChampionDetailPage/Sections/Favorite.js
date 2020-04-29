@@ -37,7 +37,7 @@ const Favorite = ({ championId, userFrom }) => {
     // axios
     //   .post("/api/favorite/myFavorited", variables)
     //   .then(res => setMyFavorited(res.data.myFavorited));
-  }, []);
+  }, [dispatch]);
   const onClickFavorite = () =>{
       if(myFavorited){
         axios

@@ -58,7 +58,7 @@ const ProductPage = () => {
       const products = jsonObj.ProductSearchResponse.Products.Product;
       dispatch(getProducts(products))
     }); 
-  }, [pageNum]);
+  }, [pageNum,dispatch]);
 
 
   const onClickPage = e => {

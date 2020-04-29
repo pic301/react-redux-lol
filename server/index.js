@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 
+const morgan = require('morgan')
 const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser')
 const config = require("./config/key");
@@ -10,11 +11,14 @@ const { Comment } = require("./models/Comment");
 const { User } = require("./models/User");
 const { auth } = require('./middleware/auth')
 
+app.use(morgan('dev'))
+
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.json()); // == express.json()
 app.use(cookieParser());
 
 const mongoose = require("mongoose");
+mongoose.set('debug',true)
 mongoose
   .connect(config.mongoURI, {
     useNewUrlParser: true,

@@ -1,12 +1,13 @@
 a{
-    color: inherit;
-    text-decoration:  none;
+    color: white !important;
+    text-decoration:  none !important;
 }
 html{
     height:100%;
 }
 body{
     background-image: linear-gradient( 135deg, #43CBFF 10%, rgb(171, 88, 201) 100%);
+ 
 }
 
 /* http://meyerweb.com/eric/tools/css/reset/

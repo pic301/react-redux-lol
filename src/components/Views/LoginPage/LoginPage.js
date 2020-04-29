@@ -19,6 +19,11 @@ const Container = styled.div`
   margin: 1rem auto;
   border-radius: 1.5em;
   box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+  & > img {
+      position:absolute;
+      width:200px; 
+      top:-170px;
+      right:30%;  }
   & > form{
     padding-top: 40px;
   }
@@ -39,7 +44,7 @@ const StyledInput = styled.input`
 width: 76%;
 color: rgb(38, 50, 56);
 font-weight: 700;
-font-size: 14px;
+font-size: 0.9rem;
 letter-spacing: 1px;
 background: rgba(136, 126, 126, 0.04);
 padding: 10px 20px;
@@ -110,7 +115,7 @@ const LoginPage = ({history}) => {
   return (
     <StyledWrapper >
       <Container>
-        <img style={{position:"absolute",width:"200px", top:"-170px",right:"30%"}} src={efdg} alt="champion"/>
+        <img src={efdg} alt="champion"/>
         <LoginTitle >LOGIN</LoginTitle>
         <form>
           <StyledInput

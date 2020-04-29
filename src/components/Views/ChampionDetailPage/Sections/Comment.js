@@ -14,7 +14,6 @@ const Comment = ({ championId, commentLists, refresh }) => {
     setLoginUser(user)
 
   },[])
-  console.log("로그인 유저다다다다다다",loginUser)
 
   const handleChange = e => {
     setCommentContent(e.target.value);
@@ -39,7 +38,7 @@ const Comment = ({ championId, commentLists, refresh }) => {
     });
   };
   return (
-    <div>
+    <div >
       {/* Comment Lists */}
     
        {commentLists &&
@@ -67,7 +66,7 @@ const Comment = ({ championId, commentLists, refresh }) => {
         )
         } 
          
-      <Form style={{ display: "flex" }}>
+      <Form style={{ display: "flex",padding:"10px" }}>
         <Form.Group
           style={{ width: "100%" }}
           as={Row}
@@ -81,7 +80,7 @@ const Comment = ({ championId, commentLists, refresh }) => {
           />
         </Form.Group>
         <Button onClick={onsubmit} style={{ width: "20%", height: "52px" }}>
-          루트에서 제출하기
+          댓글달기
         </Button>
       </Form>
     </div>

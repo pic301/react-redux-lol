@@ -9,7 +9,7 @@ const Main = () => {
   return (
     <div
       className="youtube-container"
-      // onMouseEnter={_onMouseEnter}
+      onMouseEnter={_onMouseEnter}
     >
       <iframe
         title="trailer"

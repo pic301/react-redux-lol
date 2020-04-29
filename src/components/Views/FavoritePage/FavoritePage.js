@@ -19,7 +19,7 @@ const FavoritePage = () => {
   useEffect(() => {
     refresh();
     dispatch(getChampionData())
-  }, []);
+  }, [dispatch]);
 
   const refresh = () => {
     axios

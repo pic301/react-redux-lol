@@ -10,7 +10,7 @@ import  {FaStar}  from "react-icons/fa";
 const StyledTd = styled.td`
   color:${props => props.nameColor && css`
   ${palette.gray[7]}
-  ` ||  "#ffffff"};
+  `};
   font-size:1.6rem;
 `;
 const StyledTable = styled(Table)`

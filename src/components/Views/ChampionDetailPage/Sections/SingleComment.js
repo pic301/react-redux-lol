@@ -35,7 +35,7 @@ const SingleComment = ({loginUser,championId,comment,refresh}) => {
   return (
     <div style={{ color: "black" }}>
 
-      <div style={{ border:"3px solid red"}}>
+      <div >
         {comment.writer.name} 
         {comment.content} 
        <Button onClick={() => setOpenReply(!openReply)}>답글달기</Button>
