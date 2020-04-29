@@ -1,12 +1,28 @@
 import React, { useState, useEffect, useCallback } from "react";
 import CircleImage from "../../circleImage";
-import {Row,Col,Card,ProgressBar,OverlayTrigger} from "react-bootstrap";
+import { Row, Col, Card, ProgressBar, OverlayTrigger } from "react-bootstrap";
 import { baseURL } from "../../config";
 import { imgURL } from "../../config";
 import Main from "./main_video/main_video";
 import SearchSummoners from "./SearchSummoners/SearchSummoners";
 import Button from "../../common/Button";
-import {StyledCard,StyledImage,ChampionNameButton,ChampionJobTitle,Wrapper,StyledHeaderTitle,ChampionJobBtn,SearchContainer,StyledLeftSideImage,StyledRightSideImage,UserProfile,StyledChampionName,StyledChampionCard,BackToTop} from '../../styles/LandingPageStyle'
+import {
+  StyledCard,
+  StyledImage,
+  ChampionNameButton,
+  ChampionJobTitle,
+  Wrapper,
+  StyledHeaderTitle,
+  ChampionJobBtn,
+  SearchContainer,
+  StyledLeftSideImage,
+  StyledRightSideImage,
+  UserProfile,
+  StyledChampionName,
+  StyledChampionCard,
+  BackToTop,
+  JobButtonsContainer
+} from "../../styles/LandingPageStyle";
 
 // ======================================
 //                 Redux
@@ -17,43 +33,44 @@ import { useDispatch, useSelector } from "react-redux";
 
 const CHAMPION_HP = 100;
 
-const CHAMPION_JOB_OBJS =[{
-  job:"Assassin",
-  otherJobName:"암살자",
-  color:"#4b0d0b",
-  url:`${baseURL}/img/profileicon/657.png`,
-},
-{
-  job:"Fighter",
-  otherJobName:"전사",
-  color:"#663c0f",
-  url:`${baseURL}/img/profileicon/658.png`,
-},
-{
-  job:"Mage",
-  otherJobName:"마법사",
-  color:"#5a82cc",
-  url:`${baseURL}/img/profileicon/659.png`,
-},
-{
-  job:"Marksman",
-  otherJobName:"원거리딜러",
-  color:"#2a3b26",
-  url:`${baseURL}/img/profileicon/660.png`,
-},
-{
-  job:"Support",
-  otherJobName:"서포터",
-  color:"#124039",
-  url:`${baseURL}/img/profileicon/661.png`,
-},
-{
-  job:"Tank",
-  otherJobName:"탱커",
-  color:"#2d3259",
-  url:`${baseURL}/img/profileicon/662.png`,
-},
-]
+const CHAMPION_JOB_OBJS = [
+  {
+    job: "Assassin",
+    otherJobName: "암살자",
+    color: "#4b0d0b",
+    url: `${baseURL}/img/profileicon/657.png`
+  },
+  {
+    job: "Fighter",
+    otherJobName: "전사",
+    color: "#663c0f",
+    url: `${baseURL}/img/profileicon/658.png`
+  },
+  {
+    job: "Mage",
+    otherJobName: "마법사",
+    color: "#5a82cc",
+    url: `${baseURL}/img/profileicon/659.png`
+  },
+  {
+    job: "Marksman",
+    otherJobName: "원거리딜러",
+    color: "#2a3b26",
+    url: `${baseURL}/img/profileicon/660.png`
+  },
+  {
+    job: "Support",
+    otherJobName: "서포터",
+    color: "#124039",
+    url: `${baseURL}/img/profileicon/661.png`
+  },
+  {
+    job: "Tank",
+    otherJobName: "탱커",
+    color: "#2d3259",
+    url: `${baseURL}/img/profileicon/662.png`
+  }
+];
 
 const LandingPage = () => {
   const dispatch = useDispatch();
@@ -68,25 +85,24 @@ const LandingPage = () => {
     dispatch(logoutUser());
     localStorage.removeItem("userId");
     window.location.href = "/";
-  },[dispatch])
+  }, [dispatch]);
 
   const onScroll = useCallback(() => {
     setPageYOffset(window.pageYOffset);
-  },[])
+  }, []);
 
   useEffect(() => {
     dispatch(getChampionData());
     window.addEventListener("scroll", onScroll);
-  }, []);
+  }, [dispatch,onScroll]);
 
   if (!champion) {
     return null;
   }
   const championData = Object.keys(champion).map(cham => champion[cham]);
 
-
   const ChampionJobHandler = e => {
-    if (e.target.value === undefined ) {
+    if (e.target.value === undefined) {
       return;
     } else {
       setChampionJob(e.target.value);
@@ -96,21 +112,20 @@ const LandingPage = () => {
   const scrollToTop = () => {
     window.scrollTo(0, 0);
   };
+
   const JobButtons = CHAMPION_JOB_OBJS.map(championJobObj => {
-    return  <>
-    <ChampionJobBtn
-    onClick={ChampionJobHandler}
-    value={championJobObj.job}
-    color={championJobObj.color}
-    url={championJobObj.url}
-    >
-    
-    </ChampionJobBtn>
-     <ChampionJobTitle>{championJobObj.otherJobName}</ChampionJobTitle>
-    </>
-    }
-    )
- 
+    return (
+      <>
+        <ChampionJobBtn
+          onClick={ChampionJobHandler}
+          value={championJobObj.job}
+          color={championJobObj.color}
+          url={championJobObj.url}
+        ></ChampionJobBtn>
+        <ChampionJobTitle>{championJobObj.otherJobName}</ChampionJobTitle>
+      </>
+    );
+  });
 
   return (
     <div className="background">
@@ -131,7 +146,7 @@ const LandingPage = () => {
         <UserProfile>
           <StyledCard>
             <Card.Title
-              style={{ margin: "10px", fontSize: "1.5rem" }}
+             
             >{`${userData && userData.name}님 반갑습니다`}</Card.Title>
             <Card.Body>
               <Button onClick={onLogOut}>로그아웃</Button>
@@ -142,18 +157,18 @@ const LandingPage = () => {
         ""
       )}
       <Wrapper>
-        <div style={{ display: "flex" }}>
+        <div>
           <div>
             <CircleImage />
           </div>
-          <div
-            style={{ display: "flex", flexDirection: "column", margin: "10px" }}
+          <JobButtonsContainer
+            
           >
             {JobButtons}
-          </div>
+          </JobButtonsContainer>
         </div>
         <Row>
-          {championData.map((cham) => (
+          {championData.map(cham => (
             <div key={cham.key}>
               <>
                 {cham.tags.find(element => element === `${championJob}`) ? (
@@ -163,7 +178,7 @@ const LandingPage = () => {
                         <OverlayTrigger
                           placement="bottom"
                           overlay={
-                            <StyledChampionCard >
+                            <StyledChampionCard>
                               <Card.Img
                                 variant="top"
                                 src={`${imgURL}/champion/splash/${cham.id}_0.jpg`}

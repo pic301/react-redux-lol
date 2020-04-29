@@ -1,99 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { baseURL, imgURL } from "../../config";
-import styled, {css} from "styled-components";
 import Favorite from "./Sections/Favorite";
 import Comment from "./Sections/Comment";
 import Carousel from "react-bootstrap/Carousel";
 import { palette } from "../../../lib/styles/palette";
-
-
-const TextStyle = css`
-  color: #fff;
-  font-size: 2rem;
-  font-weight:bold;
-  background: linear-gradient(to right, #cc5de8 10%, #fff 50%, #4dabf7 60%);
-  background-size: 200% auto;
-  color: #fff;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: textclip 3.5s linear infinite;
-  display: inline-block;
-  @keyframes textclip {
-    to {
-      background-position: 200% center;
-    }
-  }
-`;
-
-const DetailContainer = styled.div`
-  @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding&display=swap');
-  background-color:#ffffff;
-  color:${palette.gray[8]}; 
-  font-size: 1.1rem;
-  font-family: 'Nanum Gothic Coding', monospace;
-  line-height:1.5;
-  padding:0 10px;
-`;
-const StyledImage = styled.img`
-  width: 100%;
-  height: 400px;
-`;
-const SpellContainer = styled.div`
-  display: flex;
-  background-color:${palette.gray[2]};
-  height:200px;
-  
-`;
-const SpellPassive = styled.div`
-  display: flex;
-  background-color:${palette.gray[2]};
-`;
-const Spell = styled.div`
-  margin-right: 20px;
-  text-align: center;
-  & > img {
-    width:70px;
-    border:3px solid black;
-    cursor: pointer;
-  }
-`;
-const SpellName = styled.div`
-  font-size: 1rem;
-`;
-const StyledSkinName = styled.div`
-  text-align: center;
-  font-size: 1.5rem;
-  margin-top: 10px;
-`;
-const PassiveName = styled.div`
-`;
-const PassiveDescription = styled.div`
-    margin:10px;
-`;
-const DetailChampionContainer = styled.div`
-    text-align:center;
-    margin:10px;
-    padding:10px;
-    
-`;
-const DetailChampionName = styled.div`
-   margin:10px;
-   ${TextStyle}
-`;
-const PassiveTitle = styled.div`
-   ${TextStyle}
-   font-size:2rem;
-`;
-const SkillTilte = styled.div`
-   ${TextStyle}
-   font-size:2rem;
-`;
-const DetailChampionDescripion = styled.div`
-  background-color:${palette.gray[2]};
-  padding: 20px;
-`;
+import {DetailContainer,StyledImage,SpellContainer,SpellPassive,Spell,SpellName,StyledSkinName,PassiveName,PassiveDescription,DetailChampionContainer,DetailChampionName,PassiveTitle,SkillTilte,DetailChampionDescripion} from '../../styles/ChampionDetailStyle'
 
 const ChampionDetailPage = ({ match }) => {
   const [detailChampionSkins, setDetailChampionSkins] = useState([]);
@@ -134,14 +46,17 @@ const ChampionDetailPage = ({ match }) => {
     setSpellName(spells[i].name);
     setSpellDescription(spells[i].description);
   };
+
+  const PropsObj ={
+    controls:true,
+    indicators:false,
+    interval:3000,
+    fade:false,
+  }
   return (
     <DetailContainer >
       <Carousel
-        controls={true}
-        indicators={false}
-        interval={3000}
-        fade={false}
-        style={{ position: "relative" }}
+        {...PropsObj}
       >
         {detailChampionSkins &&
           Object.keys(detailChampionSkins).map((skin, i) => (

@@ -1,16 +1,20 @@
+import styled from 'styled-components'
+import { palette } from "../../lib/styles/palette";
+import { Image,Card } from "react-bootstrap";
+import Button from "../common/Button";
+
 // ======================================
 //        StyledComponetns
 // ======================================
-import styled from 'styled-components'
-import { palette } from "../../lib/styles/palette";
-import {Image,Card} from "react-bootstrap";
-import Button from "../common/Button";
 
 export const Wrapper = styled.div`
   display: flex;
   margin-top: 10px;
   flex-direction: row;
   position: relative;
+  & > div{
+    display:flex;
+  }
 `;
 export const StyledHeaderTitle = styled.div`
   background: 50% 100% / 50% 50% no-repeat
@@ -163,6 +167,10 @@ export const StyledCard = styled(Card)`
   background: ${palette.blue[3]};
   width: 40%;
   font-size: 1.3rem;
+  & .card-title{
+    margin: 10px;
+    font-size:1.5rem
+  }
 `;
 export const StyledChampionName = styled.div`
   display: flex;
@@ -171,7 +179,9 @@ export const StyledChampionName = styled.div`
   text-align: center;
   width: 120px;
 `;
-export const ChampionNameButton = styled(Button)``;
+export const ChampionNameButton = styled(Button)`
+  color: #ffffff;
+`;
 
 export const StyledChampionCard = styled(Card)`
   width: 18rem;
@@ -191,4 +201,10 @@ export const BackToTop = styled.button`
   padding: 10px;
   right: 6rem;
   transition: all 0.3s ease-in-out;
+`;
+
+export const JobButtonsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
 `;
